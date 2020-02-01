@@ -61,7 +61,24 @@ public class BearController : MonoBehaviour
         cc.Move(movement * Time.deltaTime);
         lastMovement = movement;
 
+        // Transport
+        if (transportLocation != Vector3.zero)
+        {
+            this.transform.position = transportLocation;
+            transportLocation = Vector3.zero;
+
+            // Stop momentum
+            lastMovement = Vector3.zero;
+            verticalSpeed = 0f;
+        }
+
         // Failsafe for 2d gameplay
         this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, 0f);
+    }
+
+    Vector3 transportLocation = Vector3.zero;
+    public void Transport(Vector3 location)
+    {
+        transportLocation = location;
     }
 }
