@@ -6,9 +6,14 @@ public class RepairerMechanics : MonoBehaviour
 {
     void Update()
     {
-        if (Input.GetKeyDown("Fire1"))
+        if (Input.GetButtonDown("Fire1"))
         {
             Debug.Log("Pressing Fire key");
         }
+    }
+
+    async void OnInputPressed()
+    {
+
     }
 }

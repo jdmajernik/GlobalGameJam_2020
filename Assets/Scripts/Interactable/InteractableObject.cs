@@ -11,11 +11,26 @@ public class InteractableObject : MonoBehaviour
 
     private bool bIsDestroyed = false;
 
-    public virtual void OnInteracted()
+    public virtual void OnBearInteract()
+    {
+        if (!bIsDestroyed)
+        {
+            this.bIsDestroyed = true;
+            this.gameObject.GetComponent<Renderer>().material = OnDestroyedMaterial;
+        }
+    }
+
+    private void RepairerInteract()
     {
         if (bIsDestroyed)
         {
-            this.gameObject.GetComponent<Renderer>().material = OnDestroyedMaterial;
+            this.bIsDestroyed = false;
+            this.gameObject.GetComponent<Renderer>().material = DefaultMaterial;
         }
+    }
+
+    void OnMouseDown()
+    {
+        RepairerInteract();
     }
 }
