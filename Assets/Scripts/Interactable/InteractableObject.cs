@@ -12,7 +12,7 @@ public class InteractableObject : MonoBehaviour
 
     private bool AsyncLatch = false;
 
-    private bool RepairLatch = false;
+    private bool MouseOverObject = false;
 
     private float TimerIncrement = 0.1f;
 
@@ -28,8 +28,8 @@ public class InteractableObject : MonoBehaviour
     {
         if (!bIsDestroyed)
         {
-            this.Damage = this.Durability;
-            if (this.Damage >= this.Durability)  //The damage done can be modified later
+            this.Damage = this.Durability;  //Damage can be changed later
+            if (this.Damage >= this.Durability)  
             {
                 this.Damage = this.Durability;
                 this.bIsDestroyed = true;
@@ -54,17 +54,15 @@ public class InteractableObject : MonoBehaviour
 
     void OnMouseOver()
     {
+        MouseOverObject = true;
         if (Input.GetMouseButtonDown(0) && !AsyncLatch && bIsDestroyed == true)
         {
             StartCoroutine("OnTimerExecute");
-        }else if (Input.GetMouseButtonDown(1))
-        {
-            RepairLatch = false;
         }
     }
     void OnMouseExit()
     {
-        this.RepairLatch = false;
+        MouseOverObject = false;
     }
 
 
@@ -73,19 +71,18 @@ public class InteractableObject : MonoBehaviour
         if (this.AsyncLatch)
         {
             yield break;
-        } //Check for prexisting asych thread
+        } //Check for prexisting asynch thread
     
         while (Input.GetMouseButton(0))
         {
             this.AsyncLatch = true;
-            this.RepairLatch = true;
+            //this.RepairLatch = true;
 
             yield return new WaitForSeconds(TimerIncrement);
 
-            if (this.RepairLatch == true)
+            if (Input.GetMouseButton(0) && this.MouseOverObject)
             {
                 RepairerInteract();
-                this.RepairLatch = false;
             }
             this.AsyncLatch = false;
         }
