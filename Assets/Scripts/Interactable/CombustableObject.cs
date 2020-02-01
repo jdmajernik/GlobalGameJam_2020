@@ -11,7 +11,7 @@ public class CombustableObject : InteractableObject
 
     void Awake()
     {
-        FireObject = Resources.Load<GameObject>("Fire");
+        FireObject = Resources.Load<GameObject>("FireObject");
     }
     public override void OnBearInteract()
     {

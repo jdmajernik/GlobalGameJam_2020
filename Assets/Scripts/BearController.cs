@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
@@ -25,11 +26,31 @@ public class BearController : MonoBehaviour
     private void Awake()
     {
         cc = this.GetComponent<CharacterController>();
+
+        var particleChildren = GetComponentsInChildren<ParticleSystem>();
+
+        foreach (var particleObject in particleChildren)
+        {
+            particleObject.Stop(true);
+        }
     }
 
     void Start()
     {
 
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.GetComponent<FireMechanics>())
+        {
+            var particleChildren = GetComponentsInChildren<ParticleSystem>();
+
+            foreach (var particleObject in particleChildren)
+            {
+                particleObject.Play();
+            }
+        }
     }
 
     void Update()
