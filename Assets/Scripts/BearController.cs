@@ -7,10 +7,15 @@ public class BearController : MonoBehaviour
 {
     CharacterController cc;
 
+    [Header("Character Movement")]
     [SerializeField] float maxHorizontalSpeed;
     [SerializeField] float jumpPower;
     [SerializeField] float slowdown;
     [SerializeField] float speedup;
+
+    [Header("Bear Attack")]
+
+    [SerializeField] private float AttackDist = 3.0f;
 
     Vector3 lastMovement = Vector3.zero;
     float verticalSpeed = 0f;
@@ -29,6 +34,8 @@ public class BearController : MonoBehaviour
 
     void Update()
     {
+        CheckInput();
+
         Vector3 movement = lastMovement;
 
         // Left/right movement
@@ -36,6 +43,7 @@ public class BearController : MonoBehaviour
         if (horizontal != 0)
         {
             movement += new Vector3(horizontal / speedup, 0, 0f);
+            this.gameObject.transform.rotation = Quaternion.LookRotation(new Vector3(horizontal, 0));
         }
         else
         {
@@ -63,5 +71,22 @@ public class BearController : MonoBehaviour
 
         // Failsafe for 2d gameplay
         this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, 0f);
+    }
+
+    /// <summary>
+    /// Checks all the Character Inputs on Update
+    /// </summary>
+    void CheckInput()
+    {
+        if (Input.GetButtonDown("BearAttack"))
+        {
+            Vector3 playerPos = this.gameObject.transform.position;
+            Vector3 AttackEndPos = playerPos + (this.gameObject.transform.forward * AttackDist);
+            Ray attackRay = new Ray(playerPos, AttackEndPos);
+            Physics.Raycast(attackRay, out RaycastHit hit, AttackDist);
+            
+            hit.transform?.gameObject?.GetComponent<InteractableObject>()?.OnBearInteract();
+
+        }
     }
 }

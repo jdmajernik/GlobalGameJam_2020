@@ -106,5 +106,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 888bd0f9e3876f6448b3706b6e428fd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnDestroyedMaterial: {fileID: 0}
-  DefaultMaterial: {fileID: 0}
+  OnDestroyedMaterial: {fileID: 2100000, guid: f0bb110a68bb05e40955867d816d3157, type: 2}
+  DefaultMaterial: {fileID: 2100000, guid: 77bb4c14b93ccf74eb8e1617b053a31a, type: 2}
