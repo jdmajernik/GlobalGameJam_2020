@@ -25,7 +25,7 @@ public class DragableObject : InteractableObject
     [SerializeField] protected bool bShowDebug = false;
 
     [SerializeField] protected float ShowDebugTime = 5.0f;
-    void Awake()
+    void Start()
     {
         mainCamera = GameObject.FindObjectOfType<Camera>();
         rb = GetComponent<Rigidbody>();
