@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
 
     Canvas gameUI;
     Text timeText;
+    AnimalControl animalControl;
 
 
 
@@ -20,11 +21,13 @@ public class GameManager : MonoBehaviour
     {
         gameUI = GameObject.FindGameObjectWithTag("GameUI").GetComponent<Canvas>();
         timeText = gameUI.transform.Find("Timer/Text").GetComponent<Text>();
+        animalControl = GameObject.FindGameObjectWithTag("AnimalControl").GetComponent<AnimalControl>();
     }
 
     private void Start()
     {
         StartCoroutine(Timer());
+
     }
 
 
@@ -51,7 +54,7 @@ public class GameManager : MonoBehaviour
 
         SecondTick((int)roundTimer);
         UpdateTimerUI(0f);
-        EndGame();
+        StartCoroutine(EndGame());
     }
 
     void UpdateTimerUI(float _time = -1f)
@@ -101,9 +104,11 @@ public class GameManager : MonoBehaviour
 
         timeText.rectTransform.localScale = Vector3.one;
     }
-
-    void EndGame()
+    
+    IEnumerator EndGame()
     {
+        animalControl.Animate();
 
+        yield return new WaitForSeconds(2f);
     }
 }
