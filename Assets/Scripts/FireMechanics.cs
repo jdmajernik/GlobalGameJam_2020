@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class FireMechanics : MonoBehaviour
@@ -30,10 +31,11 @@ public class FireMechanics : MonoBehaviour
         }
     }
 
-    private void SpawnFire()
+    private async void SpawnFire()
     {
         float spawnDir = Mathf.RoundToInt(Random.Range(0f, 100f) / 100) == 0 ? -1 : 1;
         Debug.Log(spawnDir);
+
         Vector3 SpawnPoint = new Vector3(spawnDir * spawnDist, 0 , 0) + gameObject.transform.position;
         var FireObjects = GameObject.FindObjectsOfType<FireMechanics>();
 

@@ -27,18 +27,18 @@ public enum HouseFloors
 public class GameplayStatics
 {
     // This is a class that holds all our static lookup variables. Stuff like
-    public readonly Dictionary<RepairerInput, string> RepairerInputLookup = new Dictionary<RepairerInput, string>()
+    public static Dictionary<RepairerInput, string> RepairerInputLookup = new Dictionary<RepairerInput, string>()
     {
         {RepairerInput.Repairer_UseItem, "PlayerFix" },
         {RepairerInput.Repairer_DropItem, "PlayerDrop" },
     };
-    public readonly Dictionary<BearInput, string> BearInputLookup = new Dictionary<BearInput, string>()
+    public static Dictionary<BearInput, string> BearInputLookup = new Dictionary<BearInput, string>()
     {
         {BearInput.Bear_Attack, "BearAttack" },
         {BearInput.Bear_MoveHorizontal, "Horizontal" },
         {BearInput.Bear_Jump, "Jump" },
     };
-    public readonly Dictionary<HouseFloors, Vector3> FloorPositionLookup = new Dictionary<HouseFloors, Vector3>()
+    public static Dictionary<HouseFloors, Vector3> FloorPositionLookup = new Dictionary<HouseFloors, Vector3>()
     {
         {HouseFloors.House_Basement, Vector3.zero },
 

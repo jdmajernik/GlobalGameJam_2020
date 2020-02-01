@@ -109,6 +109,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OnDestroyedMaterial: {fileID: 0}
   DefaultMaterial: {fileID: 0}
+  WaterSplashRadius: 10
+  RayCastHeight: 2
+  RayCastRadius: 2
+  highlightMaterial: {fileID: 2100000, guid: 6d01f64f41d73e14fafeb4196b965b4f, type: 2}
 --- !u!54 &6918644969278589856
 Rigidbody:
   m_ObjectHideFlags: 0
