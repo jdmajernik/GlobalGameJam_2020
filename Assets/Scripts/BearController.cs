@@ -19,6 +19,7 @@ public class BearController : MonoBehaviour
 
     Vector3 lastMovement = Vector3.zero;
     float verticalSpeed = 0f;
+    [HideInInspector] public bool canMove = true;
 
 
 
@@ -40,7 +41,7 @@ public class BearController : MonoBehaviour
 
         // Left/right movement
         float horizontal = Input.GetAxisRaw("Horizontal");
-        if (horizontal != 0)
+        if (horizontal != 0 && canMove)
         {
             movement += new Vector3(horizontal / speedup, 0, 0f);
             this.gameObject.transform.rotation = Quaternion.LookRotation(new Vector3(horizontal, 0));
@@ -56,7 +57,7 @@ public class BearController : MonoBehaviour
         if (Physics.Raycast(new Ray(this.transform.position, Vector3.down), (cc.height / 2f) + cc.skinWidth))
         {
             verticalSpeed = 0f;
-            if (Input.GetAxisRaw("Vertical") > 0)
+            if (Input.GetAxisRaw("Vertical") > 0 && canMove)
             {
                 verticalSpeed = jumpPower;
             }
@@ -70,7 +71,7 @@ public class BearController : MonoBehaviour
         lastMovement = movement;
 
         // Transport
-        if (transportLocation != Vector3.zero)
+        if (transportLocation != Vector3.zero && canMove)
         {
             this.transform.position = transportLocation;
             transportLocation = Vector3.zero;

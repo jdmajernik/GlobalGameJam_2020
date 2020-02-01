@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     Canvas gameUI;
     Text timeText;
     AnimalControl animalControl;
+    BearController bearController;
 
 
 
@@ -22,6 +23,7 @@ public class GameManager : MonoBehaviour
         gameUI = GameObject.FindGameObjectWithTag("GameUI").GetComponent<Canvas>();
         timeText = gameUI.transform.Find("Timer/Text").GetComponent<Text>();
         animalControl = GameObject.FindGameObjectWithTag("AnimalControl").GetComponent<AnimalControl>();
+        bearController = GameObject.FindGameObjectWithTag("Player").GetComponent<BearController>();
     }
 
     private void Start()
@@ -107,8 +109,30 @@ public class GameManager : MonoBehaviour
     
     IEnumerator EndGame()
     {
+        bearController.canMove = false;
+
+        StartCoroutine(MoveCameraForEnd());
+
         animalControl.Animate();
 
         yield return new WaitForSeconds(2f);
+    }
+
+    IEnumerator MoveCameraForEnd()
+    {
+        float duration = 0.75f;
+        float startTime = Time.time;
+
+        Vector3 startPosition = Camera.main.transform.position;
+        Vector3 newPosition = startPosition + Vector3.right * -5f;
+
+        while (Time.time - startTime < duration)
+        {
+            yield return new WaitForEndOfFrame();
+
+            float t = (Time.time - startTime) / duration;
+            Vector3 thisTarget = Vector3.Slerp(startPosition, newPosition, t);
+            Camera.main.transform.position = thisTarget;
+        }
     }
 }
