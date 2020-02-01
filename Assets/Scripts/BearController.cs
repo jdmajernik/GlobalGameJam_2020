@@ -7,15 +7,15 @@ public class BearController : MonoBehaviour
 {
     CharacterController cc;
 
-    [Header("Character Movement")]
-    [SerializeField] float maxHorizontalSpeed;
+    [Header("Character Movement")] [SerializeField]
+    float maxHorizontalSpeed;
+
     [SerializeField] float jumpPower;
     [SerializeField] float slowdown;
     [SerializeField] float speedup;
 
-    [Header("Bear Attack")]
-
-    [SerializeField] private float AttackDist = 3.0f;
+    [Header("Bear Attack")] [SerializeField]
+    private float AttackDist = 3.0f;
 
     Vector3 lastMovement = Vector3.zero;
     float verticalSpeed = 0f;
@@ -29,7 +29,7 @@ public class BearController : MonoBehaviour
 
     void Start()
     {
-        
+
     }
 
     void Update()
@@ -85,6 +85,7 @@ public class BearController : MonoBehaviour
     }
 
     Vector3 transportLocation = Vector3.zero;
+
     public void Transport(Vector3 location)
     {
         transportLocation = location;
@@ -106,3 +107,4 @@ public class BearController : MonoBehaviour
 
         }
     }
+}
