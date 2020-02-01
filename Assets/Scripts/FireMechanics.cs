@@ -49,4 +49,12 @@ public class FireMechanics : MonoBehaviour
 
         Instantiate(FirePrefab, SpawnPoint, Quaternion.identity);
     }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag(GameplayStatics.EXTINGUISH_COLLIDER_TAG))
+        {
+            Destroy(this.gameObject);
+        }
+    }
 }

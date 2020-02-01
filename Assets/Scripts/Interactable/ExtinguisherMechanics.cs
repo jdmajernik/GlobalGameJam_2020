@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,17 +19,30 @@ public class ExtinguisherMechanics : DragableObject
     [SerializeField] private float depletionRate = -5.0f;
     [SerializeField] private float RechargeRate = 5.0f;
 
+    private Collider ExtinguisherCollider;
+
     void Awake()
     {
         Charge = MAX_CHARGE;
         foreach (var image in GetComponentInChildren<Canvas>().gameObject.GetComponentsInChildren<Image>())
         {
-            if (image.CompareTag("Extinguisher_LoadingBar"))
+            if (image.CompareTag(GameplayStatics.LOADING_BAR_TAG))
             {
                 DepletionBar = image;
                 break;
             }
         }
+
+        var ExtinguishColliders = gameObject.GetComponentsInChildren<Collider>()
+            .Where(obj => obj.CompareTag(GameplayStatics.EXTINGUISH_COLLIDER_TAG));
+
+        foreach (var collider in ExtinguishColliders)
+        {
+            ExtinguisherCollider = collider;
+            break;
+        }
+
+        ExtinguisherCollider.enabled = false;
     }
     // Start is called before the first frame update
     protected override void UseItem()
@@ -44,11 +58,13 @@ public class ExtinguisherMechanics : DragableObject
     {
         bIsUsingExtinguisher = true;
 
-        while (Input.GetButton(GameplayStatics.RepairerInputLookup[RepairerInput.Repairer_UseItem]))
+        while (Input.GetButton(GameplayStatics.RepairerInputLookup[RepairerInput.Repairer_UseItem]) && Charge > 0)
         {
+            ExtinguisherCollider.enabled = true;
             UpdateChargeAmount(depletionRate);
             yield return new WaitForSeconds(COROUTINE_WAIT);
         }
+        ExtinguisherCollider.enabled = false;
 
         bIsUsingExtinguisher = false;
         StartCoroutine("RechargeExtinguisher");
@@ -57,6 +73,7 @@ public class ExtinguisherMechanics : DragableObject
 
     IEnumerator RechargeExtinguisher()
     {
+        ExtinguisherCollider.enabled = false;
         while (Charge < MAX_CHARGE)
         {
             UpdateChargeAmount(RechargeRate);
