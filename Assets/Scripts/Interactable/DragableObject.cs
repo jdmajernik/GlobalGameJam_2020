@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.XR.WSA.Persistence;
 
 public class DragableObject : InteractableObject
 {
 
-    private bool bIsAttachedToMouse = false;
+    public bool bIsAttachedToMouse{ get; protected set; }
     protected bool bIsUsingItem = false;
 
     protected Camera mainCamera;
@@ -29,17 +30,15 @@ public class DragableObject : InteractableObject
         mainCamera = GameObject.FindObjectOfType<Camera>();
         rb = GetComponent<Rigidbody>();
         ItemMaterial = GetComponent<Renderer>().material;
+        bIsAttachedToMouse = false;
     }
     // Start is called before the first frame update
     void OnMouseDown()
     {
-        if (!bIsAttachedToMouse)
-        {
-            AttachToMouse();
-        }
+        
     }
 
-    private void AttachToMouse()
+    public void AttachToMouse()
     {
         bIsAttachedToMouse = true;
         rb.useGravity = false;
@@ -60,11 +59,6 @@ public class DragableObject : InteractableObject
             if (Input.GetButtonUp(GameplayStatics.RepairerInputLookup[RepairerInput.Repairer_UseItem]))
             {
                 StopUseItem();
-            }
-
-            if (Input.GetButtonDown(GameplayStatics.RepairerInputLookup[RepairerInput.Repairer_DropItem]))
-            {
-                DropItem();
             }
         }
     }
@@ -104,7 +98,7 @@ public class DragableObject : InteractableObject
         }
     }
 
-    protected virtual void DropItem()
+    public virtual void DropItem()
     {
         bIsAttachedToMouse = false;
         rb.useGravity = true;

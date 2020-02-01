@@ -26,6 +26,7 @@ public enum HouseFloors
 }
 public class GameplayStatics
 {
+    public const string REPAIRER_INTERACTIBLE_OBJECTS_LAYER_NAME = "RepairerInteractableObjects";
     // This is a class that holds all our static lookup variables. Stuff like
     public static Dictionary<RepairerInput, string> RepairerInputLookup = new Dictionary<RepairerInput, string>()
     {

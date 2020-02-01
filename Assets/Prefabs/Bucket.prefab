@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4878140462103201333}
   - component: {fileID: 6918644969278589856}
   - component: {fileID: 9045637230833630806}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bucket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127,6 +127,8 @@ MonoBehaviour:
   DefaultMaterial: {fileID: 0}
   onUseParticleSystem: {fileID: 0}
   highlightMaterial: {fileID: 2100000, guid: 6d01f64f41d73e14fafeb4196b965b4f, type: 2}
+  bShowDebug: 0
+  ShowDebugTime: 5
   WaterSplashRadius: 10
   RayCastHeight: 2
   RayCastRadius: 2
