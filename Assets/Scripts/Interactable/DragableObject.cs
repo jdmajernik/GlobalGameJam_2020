@@ -29,7 +29,15 @@ public class DragableObject : InteractableObject
     {
         mainCamera = GameObject.FindObjectOfType<Camera>();
         rb = GetComponent<Rigidbody>();
-        ItemMaterial = GetComponent<Renderer>().material;
+        
+        if (GetComponent<Renderer>())
+        {
+            ItemMaterial = GetComponent<Renderer>().material;
+        }
+        else
+        {
+            ItemMaterial = GetComponentInChildren<Renderer>().material;
+        }
         bIsAttachedToMouse = false;
     }
     // Start is called before the first frame update
@@ -75,12 +83,26 @@ public class DragableObject : InteractableObject
 
     protected void StartHighlight()
     {
-        GetComponent<Renderer>().material = highlightMaterial;
+        if (GetComponent<Renderer>())
+        {
+            GetComponent<Renderer>().material = highlightMaterial;
+        }
+        else
+        {
+            GetComponentInChildren<Renderer>().material = highlightMaterial;
+        }
     }
 
     protected void StopHighlight()
     {
-        GetComponent<Renderer>().material = ItemMaterial;
+        if (GetComponent<Renderer>())
+        {
+            GetComponent<Renderer>().material = ItemMaterial;
+        }
+        else
+        {
+            GetComponentInChildren<Renderer>().material = ItemMaterial;
+        }
     }
 
     protected virtual void UseItem(){}
