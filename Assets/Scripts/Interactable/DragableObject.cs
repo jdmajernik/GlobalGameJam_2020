@@ -8,13 +8,14 @@ public class DragableObject : InteractableObject
     private bool bIsAttachedToMouse = false;
 
     private Camera mainCamera;
+    private Rigidbody rb;
 
-    private float mouseScale = 45;
-    private float constCameraDist = 10;
+    [SerializeField] private float WaterSplashRadius = 10f;
 
     void Awake()
     {
         mainCamera = GameObject.FindObjectOfType<Camera>();
+        rb = GetComponent<Rigidbody>();
     }
     // Start is called before the first frame update
     void OnMouseDown()
@@ -28,29 +29,38 @@ public class DragableObject : InteractableObject
     private void AttachToMouse()
     {
         bIsAttachedToMouse = true;
+        rb.useGravity = false;
     }
 
     void Update()
     {
         if (bIsAttachedToMouse)
         {
-            Rect ViewportSize = mainCamera.pixelRect;
-            Vector2 CenteredMousePosition = new Vector2(Input.mousePosition.x - (ViewportSize.width/2), Input.mousePosition.y - (ViewportSize.height / 2) );
-            Debug.Log(Vector2.Distance(CenteredMousePosition, Vector2.zero));
+            var plane = new Plane(Vector3.forward, transform.position);
 
-            float scaledDistance = Vector2.Distance(CenteredMousePosition, Vector2.zero) / mouseScale;
-            Vector3 SphericalWorldPosFromCamera = mainCamera.ScreenPointToRay(Input.mousePosition).GetPoint(scaledDistance);
-            Vector3 ReverseSphericalWorldPosFromCamera = mainCamera.ScreenPointToRay(Input.mousePosition).GetPoint(constCameraDist);
-            var NormalizedPosition = (SphericalWorldPosFromCamera + ReverseSphericalWorldPosFromCamera) /2;
+            Ray mouseRay = mainCamera.ScreenPointToRay(Input.mousePosition);
 
-            this.gameObject.transform.position = new Vector3(NormalizedPosition.x, NormalizedPosition.y, transform.position.z);
-            Debug.Log(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            if (plane.Raycast(mouseRay, out float rayDistance))
+            {
+                transform.position = mouseRay.GetPoint(rayDistance);
+            }
 
-            //transform.LookAt(mainCamera.transform);
+            if (Input.GetButtonDown("PlayerFix"))
+            {
+                RaycastHit[] outHits;
+                var startPos = new Vector3(transform.position.x - (WaterSplashRadius /2), transform.position.y, transform.position.z);
+                outHits = Physics.CapsuleCastAll();
+                foreach(var hit in outHits)
+                {
+                    
+                }
+            }
 
-            if (Input.GetMouseButtonDown(2))
+            if (Input.GetMouseButtonDown(1))
             {
                 bIsAttachedToMouse = false;
+                rb.useGravity = true;
+
             }
         }
     }
