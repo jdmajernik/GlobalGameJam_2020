@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 5901608952581116486}
   - component: {fileID: 6428236121181823546}
   - component: {fileID: 4878140462103201333}
-  - component: {fileID: 3646530462217344918}
   - component: {fileID: 6918644969278589856}
+  - component: {fileID: 9045637230833630806}
   m_Layer: 0
   m_Name: Bucket
   m_TagString: Untagged
@@ -95,24 +95,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3646530462217344918
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6814374249521296629}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c3ff6c30ee74dc4a9d16d6adfa606e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnDestroyedMaterial: {fileID: 0}
-  DefaultMaterial: {fileID: 0}
-  WaterSplashRadius: 10
-  RayCastHeight: 2
-  RayCastRadius: 2
-  highlightMaterial: {fileID: 2100000, guid: 6d01f64f41d73e14fafeb4196b965b4f, type: 2}
 --- !u!54 &6918644969278589856
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -129,3 +111,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &9045637230833630806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6814374249521296629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cb987afc5237e841b89fc1040190fd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnDestroyedMaterial: {fileID: 0}
+  DefaultMaterial: {fileID: 0}
+  onUseParticleSystem: {fileID: 0}
+  highlightMaterial: {fileID: 2100000, guid: 6d01f64f41d73e14fafeb4196b965b4f, type: 2}
+  WaterSplashRadius: 10
+  RayCastHeight: 2
+  RayCastRadius: 2
+  BucketFillLevel: 0

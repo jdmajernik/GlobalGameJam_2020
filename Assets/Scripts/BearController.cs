@@ -115,17 +115,21 @@ public class BearController : MonoBehaviour
     /// <summary>
     /// Checks all the Character Inputs on Update
     /// </summary>
-    void CheckInput()
+    private void CheckInput()
     {
-        if (Input.GetButtonDown("BearAttack"))
+        if (Input.GetButtonDown(GameplayStatics.BearInputLookup[BearInput.Bear_Attack]))
         {
-            Vector3 playerPos = this.gameObject.transform.position;
-            Vector3 AttackEndPos = playerPos + (this.gameObject.transform.forward * AttackDist);
-            Ray attackRay = new Ray(playerPos, AttackEndPos);
-            Physics.Raycast(attackRay, out RaycastHit hit, AttackDist);
-
-            hit.transform?.gameObject?.GetComponent<InteractableObject>()?.OnBearInteract();
-
+            BearAttack();
         }
+    }
+
+    private void BearAttack()
+    {
+        Vector3 playerPos = this.gameObject.transform.position;
+        Vector3 AttackEndPos = playerPos + (this.gameObject.transform.forward * AttackDist);
+        Ray attackRay = new Ray(playerPos, AttackEndPos);
+        Physics.Raycast(attackRay, out RaycastHit hit, AttackDist);
+
+        hit.transform?.gameObject?.GetComponent<InteractableObject>()?.OnBearInteract();
     }
 }
