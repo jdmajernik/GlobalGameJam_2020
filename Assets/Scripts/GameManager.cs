@@ -10,14 +10,16 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] int roundTimer;
     [SerializeField] float percentageToWin;
+    [SerializeField] private int fireWinCount = 100;
 
     int timeToStartPoppingTimerAt = 10;
+    private bool FirstFire = false;
 
     Canvas gameUI;
     Text timeText;
     AnimalControl animalControl;
     BearController bearController;
-
+    
 
 
     void Awake()
@@ -59,7 +61,7 @@ public class GameManager : MonoBehaviour
         switch (winner)
         {
             case GameOverType.Bear:
-                StartCoroutine(DoAfter(() => { GameOverScreen(GameOverType.Cursor); }, 2f));
+                StartCoroutine(DoAfter(() => { GameOverScreen(winner); }, 2f));
                 break;
             case GameOverType.Cursor:
                 StartCoroutine(MoveCameraForEnd());
@@ -130,6 +132,19 @@ public class GameManager : MonoBehaviour
         {
             PopTimer((float)(secondsPassed - roundTimer + timeToStartPoppingTimerAt) / (float)timeToStartPoppingTimerAt);
         }
+        //Count Fires
+        var FireCount = GameObject.FindObjectsOfType<FireMechanics>().Length;
+        if (FireCount >= 1 && FirstFire == false)
+        {
+            FirstFire = true;
+            //Spawn Fire Extinguisher
+        }
+        if (FireCount >= fireWinCount)
+        {
+            //BEAR WINS
+            GameOver(GameOverType.Bear);
+        }
+
     }
 
     /// <summary> Pops the UI timer out a bit. Power should be a number between 0 and 1 </summary>
