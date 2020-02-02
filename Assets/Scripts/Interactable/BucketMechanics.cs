@@ -16,18 +16,18 @@ public class BucketMechanics : DragableObject
     protected override void UseItem()
     {
         //BUG - Item uses itself when the player immediately picks it up. A cooldown should probably be added
-        Vector3 closestFloorPos = Vector3.zero;
+        float closestFloorPos = -1.0f;
 
         //Finds the closest floor position to the object
-        foreach (var floorPosition in GameplayStatics.FloorPositionLookup)
+        foreach (var floorPosition in GameplayStatics.FloorYPositionLookup)
         {
-            if (floorPosition.Value.y >= transform.position.y && floorPosition.Value.y > closestFloorPos.y)
+            if (floorPosition.Value <= transform.position.y && floorPosition.Value > closestFloorPos)
                 closestFloorPos = floorPosition.Value;
 
         }
 
         RaycastHit[] outHits;
-        var startPos = new Vector3(transform.position.x - (WaterSplashRadius / 2), closestFloorPos.y, transform.position.z);
+        var startPos = new Vector3(transform.position.x - (WaterSplashRadius / 2), closestFloorPos, transform.position.z);
         outHits = Physics.SphereCastAll(startPos, RayCastRadius, Vector3.right, WaterSplashRadius);
         foreach (var hit in outHits)
         {

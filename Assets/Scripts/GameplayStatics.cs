@@ -48,9 +48,10 @@ public class GameplayStatics
         {BearInput.Bear_MoveHorizontal, "Horizontal" },
         {BearInput.Bear_Jump, "Jump" },
     };
-    public static Dictionary<HouseFloors, Vector3> FloorPositionLookup = new Dictionary<HouseFloors, Vector3>()
+    public static Dictionary<HouseFloors, float> FloorYPositionLookup = new Dictionary<HouseFloors, float>()
     {
-        {HouseFloors.House_Basement, Vector3.zero },
-
+        {HouseFloors.House_Basement, 0.0f },
+        {HouseFloors.House_Middle, 3.0f },
+        {HouseFloors.House_Top, 6.0f },
     };
 }
