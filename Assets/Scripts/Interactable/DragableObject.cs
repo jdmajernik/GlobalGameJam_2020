@@ -73,7 +73,10 @@ public class DragableObject : InteractableObject
 
     void OnMouseEnter()
     {
-        StartHighlight();
+        if (!bIsAttachedToMouse)
+        {
+            StartHighlight();
+        }
     }
 
     void OnMouseExit()
@@ -85,11 +88,11 @@ public class DragableObject : InteractableObject
     {
         if (GetComponent<Renderer>())
         {
-            GetComponent<Renderer>().material = highlightMaterial;
+            GetComponent<Renderer>().material.SetFloat("_OutlineWidth", 0.033f);
         }
         else
         {
-            GetComponentInChildren<Renderer>().material = highlightMaterial;
+            GetComponentInChildren<Renderer>().material.SetFloat("_OutlineWidth", 0.033f);
         }
     }
 
@@ -97,11 +100,11 @@ public class DragableObject : InteractableObject
     {
         if (GetComponent<Renderer>())
         {
-            GetComponent<Renderer>().material = ItemMaterial;
+            GetComponent<Renderer>().material.SetFloat("_OutlineWidth", 0.0f);
         }
         else
         {
-            GetComponentInChildren<Renderer>().material = ItemMaterial;
+            GetComponentInChildren<Renderer>().material.SetFloat("_OutlineWidth", 0.0f);
         }
     }
 
