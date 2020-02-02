@@ -4818,6 +4818,7 @@ GameObject:
   - component: {fileID: 3637787526470468408}
   - component: {fileID: 1981013187363825250}
   - component: {fileID: 178991702815487555}
+  - component: {fileID: 5619725619833066382}
   m_Layer: 0
   m_Name: Bear
   m_TagString: Player
