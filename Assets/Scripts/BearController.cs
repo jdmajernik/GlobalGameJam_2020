@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,26 +7,28 @@ using UnityEngine;
 public class BearController : MonoBehaviour
 {
     CharacterController cc;
+    Animator a;
 
-    [Header("Character Movement")] [SerializeField]
-    float maxHorizontalSpeed;
-
+    [Header("Character Movement")]
+    [SerializeField] float maxHorizontalSpeed;
     [SerializeField] float jumpPower;
     [SerializeField] float slowdown;
     [SerializeField] float speedup;
-
-    [Header("Bear Attack")] [SerializeField]
-    private float AttackDist = 3.0f;
-
     Vector3 lastMovement = Vector3.zero;
     float verticalSpeed = 0f;
     [HideInInspector] public bool canMove = true;
+
+    [Header("Bear Attack")]
+    [SerializeField] private float AttackDist = 3.0f;
+    [SerializeField] private float AttackCooldown = 0.5f;
+    float lastAttack = 0f;
 
 
 
     private void Awake()
     {
         cc = this.GetComponent<CharacterController>();
+        a = this.GetComponentInChildren<Animator>();
     }
 
     void Start()
@@ -45,21 +48,42 @@ public class BearController : MonoBehaviour
         {
             movement += new Vector3(horizontal / speedup, 0, 0f);
             this.gameObject.transform.rotation = Quaternion.LookRotation(new Vector3(horizontal, 0));
+            a.SetBool("Running", true);
         }
         else
         {
             movement -= new Vector3(movement.x / slowdown, 0f, 0f);
+            a.SetBool("Running", false);
         }
 
         movement.x = Mathf.Clamp(movement.x, -maxHorizontalSpeed, maxHorizontalSpeed);
 
         // Grounded
+        bool grounded = false;
         if (Physics.Raycast(new Ray(this.transform.position, Vector3.down), (cc.height / 2f) + cc.skinWidth))
         {
             verticalSpeed = 0f;
+
+            grounded = true;
+
+            // Trigger Jump
             if (Input.GetAxisRaw("Vertical") > 0 && canMove)
             {
+                a.SetTrigger("Jump");
+            }
+        }
+
+        // Jump
+        if (doJump)
+        {
+            if (grounded)
+            {
                 verticalSpeed = jumpPower;
+                doJump = false;
+            }
+            else
+            {
+                doJump = false;
             }
         }
 
@@ -85,8 +109,13 @@ public class BearController : MonoBehaviour
         this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, 0f);
     }
 
+    bool doJump = false;
+    public void Jump()
+    {
+        doJump = true;
+    }
+    
     Vector3 transportLocation = Vector3.zero;
-
     public void Transport(Vector3 location)
     {
         transportLocation = location;
@@ -97,15 +126,24 @@ public class BearController : MonoBehaviour
     /// </summary>
     void CheckInput()
     {
-        if (Input.GetButtonDown("BearAttack"))
+        if (Input.GetButtonDown("BearAttack") && Time.time - lastAttack > AttackCooldown)
         {
-            Vector3 playerPos = this.gameObject.transform.position;
-            Vector3 AttackEndPos = playerPos + (this.gameObject.transform.forward * AttackDist);
-            Ray attackRay = new Ray(playerPos, AttackEndPos);
-            Physics.Raycast(attackRay, out RaycastHit hit, AttackDist);
-
-            hit.transform?.gameObject?.GetComponent<InteractableObject>()?.OnBearInteract();
-
+            if (Time.time - lastAttack > AttackCooldown)
+            {
+                a.SetTrigger("Attack");
+            }
         }
+    }
+
+    void BearAttack()
+    {
+        lastAttack = Time.time;
+
+        Vector3 playerPos = this.gameObject.transform.position;
+        Vector3 AttackEndPos = playerPos + (this.gameObject.transform.forward * AttackDist);
+        Ray attackRay = new Ray(playerPos, AttackEndPos);
+        Physics.Raycast(attackRay, out RaycastHit hit, AttackDist);
+
+        hit.transform?.gameObject?.GetComponent<InteractableObject>()?.OnBearInteract();
     }
 }
