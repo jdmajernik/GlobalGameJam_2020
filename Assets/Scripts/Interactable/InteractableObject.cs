@@ -71,7 +71,10 @@ public class InteractableObject : MonoBehaviour
             {
                 this.Damage = this.Durability;
                 this.bIsDestroyed = true;
-                this.gameObject.GetComponent<Renderer>().material = OnDestroyedMaterial;
+                //Object Change Here
+                //this.gameObject.GetComponent<Renderer>().material = OnDestroyedMaterial;
+                this.transform.Find("Normal").gameObject.SetActive(false);
+                this.transform.Find("Broken").gameObject.SetActive(true);
             }
         }
     }
@@ -87,7 +90,10 @@ public class InteractableObject : MonoBehaviour
             {
                 this.Damage = 0;
                 this.bIsDestroyed = false;
-                this.gameObject.GetComponent<Renderer>().material = DefaultMaterial;
+                //Object Change Here
+                //this.gameObject.GetComponent<Renderer>().material = DefaultMaterial;
+                this.transform.Find("Normal").gameObject.SetActive(true);
+                this.transform.Find("Broken").gameObject.SetActive(false);
                 ObjCanvas.GetComponent<CanvasGroup>().alpha = 0;
             }
         }
@@ -176,7 +182,10 @@ public class InteractableObject : MonoBehaviour
             {
                 Damage = 0;
                 bIsDestroyed = true;
-                this.gameObject.GetComponent<Renderer>().material = OnDestroyedMaterial;
+                //Object Change Here
+                //this.gameObject.GetComponent<Renderer>().material = OnDestroyedMaterial;
+                this.transform.Find("Normal").gameObject.SetActive(false);
+                this.transform.Find("Broken").gameObject.SetActive(true);
                 //Instantiate(Resources.Load<GameObject>("FireObject"), new Vector3(transform.position.x, transform.position.y, transform.position.z - 5), Quaternion.identity);
             }
         }
