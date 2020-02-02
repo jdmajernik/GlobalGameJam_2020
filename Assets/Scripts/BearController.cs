@@ -162,7 +162,7 @@ public class BearController : MonoBehaviour
     /// </summary>
     private void CheckInput()
     {
-        if (Input.GetButtonDown(GameplayStatics.BearInputLookup[BearInput.Bear_Attack]) && Time.time - lastAttack > AttackCooldown)
+        if (Input.GetButtonDown(GameplayStatics.BearInputLookup[BearInput.Bear_Attack]) && Time.time - lastAttack > AttackCooldown && canMove)
         {
             if (Time.time - lastAttack > AttackCooldown)
             {
