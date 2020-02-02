@@ -17,9 +17,17 @@ public class InteractableObject : MonoBehaviour
 
     private bool AsyncLatch = false;
 
+    private bool CombustionLatch = false;
+
     private bool MouseOverObject = false;
 
     private float TimerIncrement = 0.1f;
+
+    private float CombustionIncrement = 0.1f;
+
+    private int CombustionCounter = 0;
+
+    private int CombustionThreshold = 20;
 
     private float RepairIncrement = 10;
 
@@ -86,7 +94,7 @@ public class InteractableObject : MonoBehaviour
             Cursor.SetCursor(Resources.Load<Texture2D>("Hammer"), new Vector2(22, 6), CursorMode.ForceSoftware);
             if (Input.GetMouseButtonDown(0) && !AsyncLatch)
             {
-                StartCoroutine("OnTimerExecute");
+                StartCoroutine("RepairTimer");
             }
         }
     }
@@ -97,7 +105,16 @@ public class InteractableObject : MonoBehaviour
         Cursor.SetCursor(Resources.Load<Texture2D>("pointer"), new Vector2(22, 6), CursorMode.ForceSoftware);
     }
 
-    protected IEnumerator OnTimerExecute()
+    void Update()
+    {
+        if(this.CombustionLatch == false && this.bIsDestroyed && !(this.MouseOverObject == true && Input.GetMouseButtonDown(0)))
+        {
+            StartCoroutine("CombustionTimer");
+        }
+
+    }
+
+    protected IEnumerator RepairTimer()
     {
         if (this.AsyncLatch)
         {
@@ -110,7 +127,7 @@ public class InteractableObject : MonoBehaviour
             //this.RepairLatch = true;
 
             yield return new WaitForSeconds(TimerIncrement);
-
+            CombustionCounter--;
             if (Input.GetMouseButton(0) && this.MouseOverObject)
             {
                 RepairerInteract();
@@ -119,9 +136,18 @@ public class InteractableObject : MonoBehaviour
         }
     }
 
-    private void UpdateRepairAmount(float _amount)
+    protected IEnumerator CombustionTimer()
     {
-        RepairBar.fillAmount = Damage / Durability;
+        this.CombustionLatch = true;
+
+        yield return new WaitForSeconds(CombustionIncrement);
+        this.CombustionCounter++;
+        this.CombustionLatch = false;
+        if (CombustionCounter >= CombustionThreshold)
+        {
+            this.CombustionCounter = 0;
+            Instantiate(Resources.Load<GameObject>("FireObject"),new Vector3(transform.position.x, transform.position.y, transform.position.z-5),Quaternion.identity);
+        }
     }
 
 }   
