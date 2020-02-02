@@ -10,6 +10,7 @@ public class BearController : MonoBehaviour
     CharacterController cc;
     Animator a;
     ParticleSystem runningEffect;
+    ParticleSystem jumpEffect;
 
     [Header("Character Movement")]
     [SerializeField] float maxHorizontalSpeed;
@@ -32,6 +33,7 @@ public class BearController : MonoBehaviour
         cc = this.GetComponent<CharacterController>();
         a = this.GetComponentInChildren<Animator>();
         runningEffect = this.transform.Find("RunningEffect").GetComponent<ParticleSystem>();
+        jumpEffect = this.transform.Find("JumpEffect").GetComponent<ParticleSystem>();
 
         var particleChildren = GetComponentsInChildren<ParticleSystem>();
 
@@ -142,6 +144,11 @@ public class BearController : MonoBehaviour
     public void Jump()
     {
         doJump = true;
+        if (jumpEffect.isPlaying)
+        {
+            jumpEffect.Stop();
+        }
+        jumpEffect.Play();
     }
     
     Vector3 transportLocation = Vector3.zero;
