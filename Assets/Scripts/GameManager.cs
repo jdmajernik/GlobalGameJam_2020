@@ -71,6 +71,7 @@ public class GameManager : MonoBehaviour
 
     void GameOverScreen(GameOverType type)
     {
+        timeText.transform.parent.gameObject.SetActive(false);
         gameUI.transform.Find("GameOver").gameObject.SetActive(true);
         Image gameOverBackground = gameUI.transform.Find("GameOver/Background").GetComponent<Image>();
         gameUI.transform.Find("GameOver/Game Over/Winner").GetComponent<Text>().text = type == GameOverType.Bear ? "Bear Wins" : "Bear Loses";
