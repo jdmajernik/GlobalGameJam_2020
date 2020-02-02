@@ -148,9 +148,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHorizontalSpeed: 6
-  jumpPower: 4
-  slowdown: 15
-  speedup: 5
+  jumpPower: 4.5
+  slowdown: 18
+  speedup: 4
   canMove: 1
   AttackDist: 3
   AttackCooldown: 0.5
