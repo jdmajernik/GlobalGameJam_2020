@@ -27,7 +27,7 @@ public class DragableObject : MonoBehaviour
     [SerializeField] protected float ShowDebugTime = 5.0f;
     void Start()
     {
-        mainCamera = GameObject.FindObjectOfType<Camera>();
+        mainCamera = Camera.main;
         rb = GetComponent<Rigidbody>();
         
         if (GetComponent<Renderer>())
