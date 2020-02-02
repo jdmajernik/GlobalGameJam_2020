@@ -50,8 +50,8 @@ public class GameplayStatics
     };
     public static Dictionary<HouseFloors, float> FloorYPositionLookup = new Dictionary<HouseFloors, float>()
     {
-        {HouseFloors.House_Basement, 0.0f },
-        {HouseFloors.House_Middle, 3.0f },
-        {HouseFloors.House_Top, 6.0f },
+        {HouseFloors.House_Basement, 0.45f },
+        {HouseFloors.House_Middle, 3.45f },
+        {HouseFloors.House_Top, 6.45f },
     };
 }
