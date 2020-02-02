@@ -25,7 +25,7 @@ public class DragableObject : MonoBehaviour
     [SerializeField] protected bool bShowDebug = false;
 
     [SerializeField] protected float ShowDebugTime = 5.0f;
-    void Start()
+    protected void Init()
     {
         mainCamera = Camera.main;
         rb = GetComponent<Rigidbody>();
