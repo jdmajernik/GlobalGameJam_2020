@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
-using UnityEngine.XR.WSA.Persistence;
+//using UnityEngine.XR.WSA.Persistence; // This threw build errors and intellisense says it was not in use - sorry in advance if it broke something
 
 public class DragableObject : InteractableObject
 {
