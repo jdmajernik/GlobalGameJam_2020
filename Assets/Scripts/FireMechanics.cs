@@ -30,6 +30,7 @@ public class FireMechanics : MonoBehaviour
     private bool bLatch = false;
     private bool bLevelIncreaseCoolDown = false;
     private bool bLevelDecreaseCoolDown = false;
+    private bool bIsIncreasingLevel = false;
 
     private ParticleSystem FirePartSystem;
     private ParticleSystem FirePartChild;
@@ -140,10 +141,10 @@ public class FireMechanics : MonoBehaviour
 
     private void IncreaseLevel()
     {
+        if(FireLevel!= EFireLevels.Fire_Large) { bIsIncreasingLevel = true; }
+
         FireLevel = (int)FireLevel + 1 <= (int)EFireLevels.Fire_Large ? (EFireLevels)((int)FireLevel + 1) : EFireLevels.Fire_Large;
         bLevelIncreaseCoolDown = true;
-
-        Debug.Log("Setting the fire's new level");
 
         UpdateFireParticles();
 
@@ -158,7 +159,6 @@ public class FireMechanics : MonoBehaviour
             //I want to try and always upgrade the fire if it's possible, since it might fully upgrade, get extinguished to small and then be allowed to grow again, this is a way to ensure it's always trying to get larger
             if (!bLevelDecreaseCoolDown && FireLevel != EFireLevels.Fire_Large)
             {
-                Debug.Log("Upgrading the fire");
                 IncreaseLevel();
             }
             yield return new WaitForSeconds(checkFireUpgradeWait);
@@ -197,7 +197,12 @@ public class FireMechanics : MonoBehaviour
                 break;
         }
 
-        
+        if (bIsIncreasingLevel)
+        {
+            FirePartSystem.emission.SetBursts(new ParticleSystem.Burst[] {new ParticleSystem.Burst(FirePartSystem.time,new ParticleSystem.MinMaxCurve(20 * (int)FireLevel),1, 100000)});
+
+            bIsIncreasingLevel = false;
+        }
     }
 }
 

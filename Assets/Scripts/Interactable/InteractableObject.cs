@@ -52,6 +52,7 @@ public class InteractableObject : MonoBehaviour
 
     void Awake()
     {
+
         bear = GameObject.FindObjectOfType<BearController>();
 
         CombustionThreshold = MinimumCombustionThreshold + UnityEngine.Random.Range(0, 50);
@@ -183,7 +184,7 @@ public class InteractableObject : MonoBehaviour
     {
         this.BurnLatch = true;
         yield return new WaitForSeconds(BurnTimeout);
-        Damage = Damage + BurnDamage;
+        Damage = Mathf.Clamp(Damage + BurnDamage, 0, Durability);
         if (!bIsDestroyed)
         {
             if (Damage >= Durability)
