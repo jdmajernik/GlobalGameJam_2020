@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
@@ -29,11 +30,32 @@ public class BearController : MonoBehaviour
     {
         cc = this.GetComponent<CharacterController>();
         a = this.GetComponentInChildren<Animator>();
+
+        var particleChildren = GetComponentsInChildren<ParticleSystem>();
+
+        foreach (var particleObject in particleChildren)
+        {
+            particleObject.Stop(true);
+        }
+
     }
 
     void Start()
     {
 
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.GetComponent<FireMechanics>())
+        {
+            var particleChildren = GetComponentsInChildren<ParticleSystem>();
+
+            foreach (var particleObject in particleChildren)
+            {
+                particleObject.Play();
+            }
+        }
     }
 
     void Update()
@@ -124,9 +146,9 @@ public class BearController : MonoBehaviour
     /// <summary>
     /// Checks all the Character Inputs on Update
     /// </summary>
-    void CheckInput()
+    private void CheckInput()
     {
-        if (Input.GetButtonDown("BearAttack") && Time.time - lastAttack > AttackCooldown)
+        if (Input.GetButtonDown(GameplayStatics.BearInputLookup[BearInput.Bear_Attack]) && Time.time - lastAttack > AttackCooldown)
         {
             if (Time.time - lastAttack > AttackCooldown)
             {
@@ -135,7 +157,7 @@ public class BearController : MonoBehaviour
         }
     }
 
-    void BearAttack()
+    public void BearAttack()
     {
         lastAttack = Time.time;
 

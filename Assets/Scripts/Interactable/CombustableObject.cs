@@ -11,7 +11,7 @@ public class CombustableObject : InteractableObject
 
     void Awake()
     {
-        FireObject = Resources.Load<GameObject>("Fire");
+        FireObject = Resources.Load<GameObject>("FireObject");
     }
     public override void OnBearInteract()
     {
@@ -22,5 +22,6 @@ public class CombustableObject : InteractableObject
     protected virtual void SpawnFire()
     {
         if(SpawnedFire == null) SpawnedFire = Instantiate(FireObject, this.transform.position + new Vector3(0, 0,0 - FireSpawnZOffset), Quaternion.identity);
+        SpawnedFire.GetComponent<FireMechanics>().SetLevel(EFireLevels.Fire_Large);
     }
 }
