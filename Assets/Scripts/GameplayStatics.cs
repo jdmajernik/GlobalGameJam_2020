@@ -34,6 +34,7 @@ public class GameplayStatics
     public const string GAME_UI_TAG = "GameUI";
     public const string ANIMAL_CONTROL_TAG = "AnimalControl";
     public const string WATER_TAG = "WaterColider";
+    public const string DESTRUCTABLE_ITEM_TAG = "DestructableItem";
 
     public const float FIRE_SPAWN_Z = 1.0f;
 
@@ -51,8 +52,8 @@ public class GameplayStatics
     };
     public static Dictionary<HouseFloors, float> FloorYPositionLookup = new Dictionary<HouseFloors, float>()
     {
-        {HouseFloors.House_Basement, 0.45f },
-        {HouseFloors.House_Middle, 3.45f },
-        {HouseFloors.House_Top, 6.45f },
+        {HouseFloors.House_Basement,0.3f },
+        {HouseFloors.House_Middle, 3.3f },
+        {HouseFloors.House_Top, 6.2f },
     };
 }

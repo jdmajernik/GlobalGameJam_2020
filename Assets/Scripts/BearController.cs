@@ -247,6 +247,8 @@ public class BearController : MonoBehaviour
     {
         while (true)
         {
+            var CurrentBearFloor = GetCurrentFloorOfObject(this.gameObject);
+
             if (AttackObject != null)
             {
                 //clears out the attack object if it's too far away
@@ -258,10 +260,15 @@ public class BearController : MonoBehaviour
             }
 
             var destructableEnumerator = GameObject.FindObjectsOfType<InteractableObject>()
-                .Where(obj => !obj.GetComponent<DragableObject>() && !obj.bIsDestroyed);
+                .Where(obj => !obj.bIsDestroyed);
 
             foreach (var item in destructableEnumerator)
             {
+                if (CurrentBearFloor != GetCurrentFloorOfObject(item.gameObject))
+                {
+                    continue;
+                }
+
                 var newObjPos = Vector3.Distance(transform.position, item.gameObject.transform.position);
                 if (newObjPos < maxDistToObject)
                 {
@@ -292,5 +299,12 @@ public class BearController : MonoBehaviour
         }
 
         yield return null;
+    }
+
+    private HouseFloors GetCurrentFloorOfObject(GameObject obj)
+    {
+        return GameplayStatics.FloorYPositionLookup
+            .Where(pos => pos.Value < obj.transform.position.y).OrderByDescending(x => x.Value).FirstOrDefault()
+            .Key;
     }
 }
