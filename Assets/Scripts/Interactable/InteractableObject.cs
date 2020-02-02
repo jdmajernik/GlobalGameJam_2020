@@ -112,7 +112,7 @@ public class InteractableObject : MonoBehaviour
     void OnMouseOver()
     {
         MouseOverObject = true;
-        if (bIsDestroyed == true)
+        if (bIsDestroyed == true && GameObject.FindObjectOfType<RepairerMechanics>().HeldItem == null)
         {
             ObjCanvas.GetComponent<CanvasGroup>().alpha = 1;
             Cursor.SetCursor(Resources.Load<Texture2D>("Hammer"), new Vector2(22, 6), CursorMode.ForceSoftware);

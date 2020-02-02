@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RepairerMechanics : MonoBehaviour
 {
-    protected DragableObject HeldItem;
+    public DragableObject HeldItem { get; protected set; }
     protected Camera mainCamera;
 
     void Awake()
