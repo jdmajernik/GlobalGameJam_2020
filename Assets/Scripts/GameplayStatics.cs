@@ -34,6 +34,8 @@ public class GameplayStatics
     public const string GAME_UI_TAG = "GameUI";
     public const string ANIMAL_CONTROL_TAG = "AnimalControl";
 
+    public const float FIRE_SPAWN_Z = 1.0f;
+
     // This is a class that holds all our static lookup variables. Stuff like
     public static Dictionary<RepairerInput, string> RepairerInputLookup = new Dictionary<RepairerInput, string>()
     {

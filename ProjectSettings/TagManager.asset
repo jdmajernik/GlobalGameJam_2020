@@ -9,6 +9,8 @@ TagManager:
   - ExtinguishesFires
   - Extinguisher_LoadingBar
   - FireBoundry
+  - FireParticleChild
+  - FireParticleParent
   layers:
   - Default
   - TransparentFX

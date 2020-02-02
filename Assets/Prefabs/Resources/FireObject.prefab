@@ -75,8 +75,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9036f0bbde851b4aa2932c52039a7e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnDist: 3
-  MinDistToSpawn: 1
+  MedFireUpgradeWaitTime: 1
+  LargeFireUpgradeWaitTime: 1.5
 --- !u!1001 &7535703136148579018
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -143,6 +143,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6723280838452998020, guid: 3da18b9350394ce48abe6cf1f86fd234,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 6723280838452998020, guid: 3da18b9350394ce48abe6cf1f86fd234,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 8942709900370422468, guid: 3da18b9350394ce48abe6cf1f86fd234,
+        type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].time
+      value: 0.6997921
+      objectReference: {fileID: 0}
+    - target: {fileID: 8942709900370422468, guid: 3da18b9350394ce48abe6cf1f86fd234,
+        type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].value
+      value: 0.2862305
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3da18b9350394ce48abe6cf1f86fd234, type: 3}

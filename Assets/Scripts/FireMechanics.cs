@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using UnityEngine;
@@ -31,6 +32,7 @@ public class FireMechanics : MonoBehaviour
     private bool bLevelDecreaseCoolDown = false;
 
     private ParticleSystem FirePartSystem;
+    private ParticleSystem FirePartChild;
 
     private List<Collider> Boundries;
 
@@ -56,7 +58,15 @@ public class FireMechanics : MonoBehaviour
             Boundries.Add(boundary.GetComponent<Collider>());
         }
 
-        FirePartSystem = GetComponentInChildren<ParticleSystem>();
+       
+        var FireChild = GetComponentsInChildren<ParticleSystem>();
+
+        foreach (var child in FireChild)
+        {
+            if (child.CompareTag("FireParticleParent")) { FirePartSystem = child; }
+            if (child.CompareTag("FireParticleChild")) { FirePartChild = child; ; }
+            
+        }
 
         UpdateFireParticles();
 
@@ -169,16 +179,21 @@ public class FireMechanics : MonoBehaviour
     private void UpdateFireParticles()
     {
         var MainSettings = FirePartSystem.main;
+        var SecondSettings = FirePartChild.main;
+
         switch (FireLevel)
         {
             case EFireLevels.Fire_Small:
                 MainSettings.startLifetime = 0.3f;
+                SecondSettings.startLifetime = 0.1f;
                 break;
             case EFireLevels.Fire_Medium:
                 MainSettings.startLifetime = 0.6f;
+                SecondSettings.startLifetime = 0.25f;
                 break;
             case EFireLevels.Fire_Large:
                 MainSettings.startLifetime = 1.0f;
+                SecondSettings.startLifetime = 0.6f;
                 break;
         }
 

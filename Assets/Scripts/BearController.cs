@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
@@ -24,8 +25,15 @@ public class BearController : MonoBehaviour
     [Header("Bear Attack")]
     [SerializeField] private float AttackDist = 3.0f;
     [SerializeField] private float AttackCooldown = 0.5f;
+
+    public InteractableObject AttackObject { get; private set; }
     float lastAttack = 0f;
 
+
+    [Header("Bear Attack - Selection")]
+    private float maxDistToObject = 2.0f;
+
+    private float asyncLookupThreadSleep = 0.5f;
 
 
     private void Awake()
@@ -41,7 +49,7 @@ public class BearController : MonoBehaviour
         {
             particleObject.Stop(true);
         }
-
+        StartCoroutine(FindClosestObject());
     }
 
     void Start()
@@ -175,17 +183,68 @@ public class BearController : MonoBehaviour
 
     public void BearAttack()
     {
-        Vector3 playerPos = this.gameObject.transform.position;
-        Vector3 AttackEndPos = playerPos + (this.gameObject.transform.forward * AttackDist);
-        Ray attackRay = new Ray(playerPos, AttackEndPos);
-        Physics.Raycast(attackRay, out RaycastHit hit, AttackDist);
-
-        hit.transform?.gameObject?.GetComponent<InteractableObject>()?.OnBearInteract();
+        if (AttackObject != null)
+        {
+            if (AttackObject.bIsDestroyed)
+            {
+                AttackObject.ClearHighlight();
+                AttackObject = null;
+                return;
+            }
+            AttackObject.OnBearInteract();
+        }
     }
 
     IEnumerator DoAfter(Action action, float delay)
     {
         yield return new WaitForSeconds(delay);
         action();
+    }
+
+    private IEnumerator FindClosestObject()
+    {
+        while (true)
+        {
+            if (AttackObject != null)
+            {
+                //clears out the attack object if it's too far away
+                if (Vector3.Distance(transform.position, AttackObject.gameObject.transform.position) > maxDistToObject)
+                {
+                    AttackObject.ClearHighlight();
+                    AttackObject = null;
+                }
+            }
+
+            var destructableEnumerator = GameObject.FindObjectsOfType<InteractableObject>()
+                .Where(obj => !obj.GetComponent<DragableObject>() && !obj.bIsDestroyed);
+
+            foreach (var item in destructableEnumerator)
+            {
+                var newObjPos = Vector3.Distance(transform.position, item.gameObject.transform.position);
+                if (newObjPos < maxDistToObject)
+                {
+                    if (AttackObject != null)
+                    {
+                        var attackObjPos = Vector3.Distance(transform.position, AttackObject.gameObject.transform.position);
+
+                        AttackObject = newObjPos > attackObjPos ? item : AttackObject;
+                    }
+                    else
+                    {
+                        AttackObject = item;
+                    }
+                }
+            }
+
+            if (AttackObject != null)
+            {
+                AttackObject.SetHighlight();
+            }
+
+            //Sleep for a bit and do this all again
+            yield return new WaitForSeconds(asyncLookupThreadSleep);
+        }
+
+        yield return null;
     }
 }

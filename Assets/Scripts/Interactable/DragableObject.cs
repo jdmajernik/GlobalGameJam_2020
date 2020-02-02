@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 using UnityEngine;
 //using UnityEngine.XR.WSA.Persistence; // This threw build errors and intellisense says it was not in use - sorry in advance if it broke something
 
-public class DragableObject : InteractableObject
+public class DragableObject : MonoBehaviour
 {
 
     public bool bIsAttachedToMouse{ get; protected set; }
@@ -34,7 +34,7 @@ public class DragableObject : InteractableObject
         {
             ItemMaterial = GetComponent<Renderer>().material;
         }
-        else
+        else if(GetComponentInChildren<Renderer>())
         {
             ItemMaterial = GetComponentInChildren<Renderer>().material;
         }
@@ -48,8 +48,8 @@ public class DragableObject : InteractableObject
 
     public void AttachToMouse()
     {
-        bIsAttachedToMouse = true;
-        rb.useGravity = false;
+        this.bIsAttachedToMouse = true;
+        this.rb.useGravity = false;
         StopHighlight();
     }
 
@@ -130,6 +130,4 @@ public class DragableObject : InteractableObject
         StartHighlight();
     }
 
-    //Overriding the base implementation to do nothing
-    public override void OnBearInteract() { }
 }

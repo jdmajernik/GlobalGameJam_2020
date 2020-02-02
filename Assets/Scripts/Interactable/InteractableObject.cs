@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -43,17 +44,22 @@ public class InteractableObject : MonoBehaviour
 
     private float Damage = 0;
 
-    private bool bIsDestroyed = false;
+    public bool bIsDestroyed { get; protected set; }
 
     private Image RepairBar;
 
+    private BearController bear;
+
     void Awake()
     {
+        bear = GameObject.FindObjectOfType<BearController>();
+
         CombustionThreshold = MinimumCombustionThreshold + UnityEngine.Random.Range(0, 50);
         ObjCanvas.GetComponent<CanvasGroup>().alpha = 0;
+        bIsDestroyed = false;
         foreach (var image in GetComponentInChildren<Canvas>().gameObject.GetComponentsInChildren<Image>())
         {
-            if (image.CompareTag("Extinguisher_LoadingBar"))
+            if (image.CompareTag(GameplayStatics.LOADING_BAR_TAG))
             {
                 RepairBar = image;
                 break;
@@ -169,7 +175,7 @@ public class InteractableObject : MonoBehaviour
         if (CombustionCounter >= CombustionThreshold)
         {
             this.CombustionCounter = 0;
-            Instantiate(Resources.Load<GameObject>("FireObject"),new Vector3(transform.position.x, transform.position.y, transform.position.z-5),Quaternion.identity);
+            Instantiate(Resources.Load<GameObject>("FireObject"),new Vector3(transform.position.x, transform.position.y, transform.position.z-(GameplayStatics.FIRE_SPAWN_Z)),Quaternion.identity);
         }
     }
 
@@ -192,6 +198,30 @@ public class InteractableObject : MonoBehaviour
             }
         }
         this.BurnLatch = false;
+    }
+
+
+    public void SetHighlight()
+    {
+        if (GetComponent<Renderer>())
+        {
+            GetComponent<Renderer>().material.SetFloat("_OutlineWidth", 0.033f);
+        }
+        else if (GetComponentInChildren<Renderer>())
+        {
+            GetComponentsInChildren<Renderer>().Where(obj => obj.enabled).FirstOrDefault()?.material.SetFloat("_OutlineWidth", 0.033f);
+        }
+    }
+    public void ClearHighlight()
+    {
+        if (GetComponent<Renderer>())
+        {
+            GetComponent<Renderer>().material.SetFloat("_OutlineWidth", 0.0f);
+        }
+        else if (GetComponentInChildren<Renderer>())
+        {
+            GetComponentInChildren<Renderer>().material.SetFloat("_OutlineWidth", 0.0f);
+        }
     }
 
 }   
