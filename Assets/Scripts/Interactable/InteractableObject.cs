@@ -1,7 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class InteractableObject : MonoBehaviour
 {
@@ -9,6 +12,8 @@ public class InteractableObject : MonoBehaviour
     [SerializeField]private Material OnDestroyedMaterial;
 
     [SerializeField] private Material DefaultMaterial;
+
+    [SerializeField] private Canvas ObjCanvas;
 
     private bool AsyncLatch = false;
 
@@ -23,6 +28,21 @@ public class InteractableObject : MonoBehaviour
     private int Damage = 0;
 
     private bool bIsDestroyed = false;
+
+    private Image RepairBar;
+
+    void Awake()
+    {
+        ObjCanvas.GetComponent<CanvasGroup>().alpha = 0;
+        foreach (var image in GetComponentInChildren<Canvas>().gameObject.GetComponentsInChildren<Image>())
+        {
+            if (image.CompareTag("Extinguisher_LoadingBar"))
+            {
+                RepairBar = image;
+                break;
+            }
+        }
+    }
 
     public virtual void OnBearInteract()
     {
@@ -43,11 +63,14 @@ public class InteractableObject : MonoBehaviour
         if (bIsDestroyed)
         {
             this.Damage = this.Damage - this.RepairIncrement;
-            if(this.Damage <= 0)
+            RepairBar.fillAmount = Damage / Durability;
+
+            if (this.Damage <= 0)
             {
                 this.Damage = 0;
                 this.bIsDestroyed = false;
                 this.gameObject.GetComponent<Renderer>().material = DefaultMaterial;
+                ObjCanvas.GetComponent<CanvasGroup>().alpha = 0;
             }
         }
     }
@@ -55,16 +78,21 @@ public class InteractableObject : MonoBehaviour
     void OnMouseOver()
     {
         MouseOverObject = true;
-        if (Input.GetMouseButtonDown(0) && !AsyncLatch && bIsDestroyed == true)
+        if (bIsDestroyed == true)
         {
-            StartCoroutine("OnTimerExecute");
+            ObjCanvas.GetComponent<CanvasGroup>().alpha = 1;
+        
+            if (Input.GetMouseButtonDown(0) && !AsyncLatch)
+            {
+                StartCoroutine("OnTimerExecute");
+            }
         }
     }
     void OnMouseExit()
     {
         MouseOverObject = false;
+        ObjCanvas.GetComponent<CanvasGroup>().alpha = 0;
     }
-
 
     protected IEnumerator OnTimerExecute()
     {
@@ -88,5 +116,9 @@ public class InteractableObject : MonoBehaviour
         }
     }
 
+    private void UpdateRepairAmount(float _amount)
+    {
+        RepairBar.fillAmount = Damage / Durability;
+    }
 
 }   
