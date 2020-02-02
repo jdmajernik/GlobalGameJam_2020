@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] int roundTimer;
     [SerializeField] float percentageToWin;
-    private int fireWinCount = 90;
+    private int fireWinCount = 70;
 
     int timeToStartPoppingTimerAt = 10;
     private bool FirstFire = false;
