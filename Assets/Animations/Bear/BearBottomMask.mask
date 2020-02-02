@@ -7,5 +7,73 @@ AvatarMask:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: BearBottomMask
-  m_Mask: 01000000000000000000000001000000010000000000000000000000000000000000000001000000010000000000000000000000
-  m_Elements: []
+  m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: Armature
+    m_Weight: 0
+  - m_Path: Armature/Control Bone
+    m_Weight: 0
+  - m_Path: Armature/Control Bone/Foot.Control.L
+    m_Weight: 0
+  - m_Path: Armature/Control Bone/Foot.Control.L/Foot.Control.L_end
+    m_Weight: 0
+  - m_Path: Armature/Control Bone/Hand.controler.L
+    m_Weight: 0
+  - m_Path: Armature/Control Bone/Hand.controler.L/Hand.controler.L_end
+    m_Weight: 0
+  - m_Path: Armature/Control Bone/Hips.Control
+    m_Weight: 0
+  - m_Path: Armature/Control Bone/Hips.Control/Hip
+    m_Weight: 1
+  - m_Path: Armature/Control Bone/Hips.Control/Hip/UpperLeg.L
+    m_Weight: 1
+  - m_Path: Armature/Control Bone/Hips.Control/Hip/UpperLeg.L/LowerLeg.L
+    m_Weight: 1
+  - m_Path: Armature/Control Bone/Hips.Control/Hip/UpperLeg.L/LowerLeg.L/Foot.L
+    m_Weight: 1
+  - m_Path: Armature/Control Bone/Hips.Control/Hip/UpperLeg.L/LowerLeg.L/Foot.L/Foot.L_end
+    m_Weight: 1
+  - m_Path: Armature/Control Bone/Hips.Control/Hip/UpperLeg.R
+    m_Weight: 1
+  - m_Path: Armature/Control Bone/Hips.Control/Hip/UpperLeg.R/LowerLeg.R
+    m_Weight: 1
+  - m_Path: Armature/Control Bone/Hips.Control/Hip/UpperLeg.R/LowerLeg.R/Foot.R
+    m_Weight: 1
+  - m_Path: Armature/Control Bone/Hips.Control/Hip/UpperLeg.R/LowerLeg.R/Foot.R/Foot.R_end
+    m_Weight: 1
+  - m_Path: Armature/Control Bone/Hips.Control/Hip/Wasit
+    m_Weight: 1
+  - m_Path: Armature/Control Bone/Hips.Control/Hip/Wasit/Chest
+    m_Weight: 1
+  - m_Path: Armature/Control Bone/Hips.Control/Hip/Wasit/Chest/neck
+    m_Weight: 1
+  - m_Path: Armature/Control Bone/Hips.Control/Hip/Wasit/Chest/neck/Head
+    m_Weight: 1
+  - m_Path: Armature/Control Bone/Hips.Control/Hip/Wasit/Chest/neck/Head/Head_end
+    m_Weight: 1
+  - m_Path: Armature/Control Bone/Hips.Control/Hip/Wasit/Chest/Shoulder.L
+    m_Weight: 1
+  - m_Path: Armature/Control Bone/Hips.Control/Hip/Wasit/Chest/Shoulder.L/UpperArm.L
+    m_Weight: 1
+  - m_Path: Armature/Control Bone/Hips.Control/Hip/Wasit/Chest/Shoulder.L/UpperArm.L/LowerArm.L
+    m_Weight: 1
+  - m_Path: Armature/Control Bone/Hips.Control/Hip/Wasit/Chest/Shoulder.L/UpperArm.L/LowerArm.L/Hand.L
+    m_Weight: 1
+  - m_Path: Armature/Control Bone/Hips.Control/Hip/Wasit/Chest/Shoulder.L/UpperArm.L/LowerArm.L/Hand.L/Hand.L_end
+    m_Weight: 1
+  - m_Path: Armature/Control Bone/Hips.Control/Hip/Wasit/Chest/Shoulder.R
+    m_Weight: 1
+  - m_Path: Armature/Control Bone/Hips.Control/Hip/Wasit/Chest/Shoulder.R/UpperArm.R
+    m_Weight: 1
+  - m_Path: Armature/Control Bone/Hips.Control/Hip/Wasit/Chest/Shoulder.R/UpperArm.R/LowerArm.R
+    m_Weight: 1
+  - m_Path: Armature/Control Bone/Hips.Control/Hip/Wasit/Chest/Shoulder.R/UpperArm.R/LowerArm.R/Hand.R
+    m_Weight: 1
+  - m_Path: Armature/Control Bone/Hips.Control/Hip/Wasit/Chest/Shoulder.R/UpperArm.R/LowerArm.R/Hand.R/Hand.R_end
+    m_Weight: 1
+  - m_Path: Armature.001
+    m_Weight: 0
+  - m_Path: Plane
+    m_Weight: 0

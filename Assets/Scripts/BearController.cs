@@ -9,6 +9,8 @@ public class BearController : MonoBehaviour
 {
     CharacterController cc;
     Animator a;
+    ParticleSystem runningEffect;
+    ParticleSystem jumpEffect;
 
     [Header("Character Movement")]
     [SerializeField] float maxHorizontalSpeed;
@@ -30,6 +32,8 @@ public class BearController : MonoBehaviour
     {
         cc = this.GetComponent<CharacterController>();
         a = this.GetComponentInChildren<Animator>();
+        runningEffect = this.transform.Find("RunningEffect").GetComponent<ParticleSystem>();
+        jumpEffect = this.transform.Find("JumpEffect").GetComponent<ParticleSystem>();
 
         var particleChildren = GetComponentsInChildren<ParticleSystem>();
 
@@ -42,7 +46,10 @@ public class BearController : MonoBehaviour
 
     void Start()
     {
-
+        if (!runningEffect.isPlaying)
+        {
+            runningEffect.Play();
+        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -64,22 +71,6 @@ public class BearController : MonoBehaviour
 
         Vector3 movement = lastMovement;
 
-        // Left/right movement
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        if (horizontal != 0 && canMove)
-        {
-            movement += new Vector3(horizontal / speedup, 0, 0f);
-            this.gameObject.transform.rotation = Quaternion.LookRotation(new Vector3(horizontal, 0));
-            a.SetBool("Running", true);
-        }
-        else
-        {
-            movement -= new Vector3(movement.x / slowdown, 0f, 0f);
-            a.SetBool("Running", false);
-        }
-
-        movement.x = Mathf.Clamp(movement.x, -maxHorizontalSpeed, maxHorizontalSpeed);
-
         // Grounded
         bool grounded = false;
         if (Physics.Raycast(new Ray(this.transform.position, Vector3.down), (cc.height / 2f) + cc.skinWidth))
@@ -92,9 +83,27 @@ public class BearController : MonoBehaviour
             if (Input.GetAxisRaw("Vertical") > 0 && canMove)
             {
                 a.SetTrigger("Jump");
+                Jump();
             }
         }
 
+        // Left/right movement
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        if (horizontal != 0 && canMove)
+        {
+            movement += new Vector3(horizontal / speedup, 0, 0f);
+            this.gameObject.transform.rotation = Quaternion.LookRotation(new Vector3(horizontal, 0));
+            a.SetBool("Running", true);
+            runningEffect.enableEmission = grounded;
+        }
+        else
+        {
+            movement -= new Vector3(movement.x / slowdown, 0f, 0f);
+            a.SetBool("Running", false);
+            runningEffect.enableEmission = false;
+        }
+        movement.x = Mathf.Clamp(movement.x, -maxHorizontalSpeed, maxHorizontalSpeed);
+        
         // Jump
         if (doJump)
         {
@@ -135,6 +144,11 @@ public class BearController : MonoBehaviour
     public void Jump()
     {
         doJump = true;
+        if (jumpEffect.isPlaying)
+        {
+            jumpEffect.Stop();
+        }
+        jumpEffect.Play();
     }
     
     Vector3 transportLocation = Vector3.zero;
@@ -152,6 +166,7 @@ public class BearController : MonoBehaviour
         {
             if (Time.time - lastAttack > AttackCooldown)
             {
+                BearAttack();
                 a.SetTrigger("Attack");
                 BearAttack();
             }

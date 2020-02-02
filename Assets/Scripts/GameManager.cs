@@ -22,9 +22,9 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        gameUI = GameObject.FindGameObjectWithTag("GameUI").GetComponent<Canvas>();
+        gameUI = GameObject.FindGameObjectWithTag(GameplayStatics.GAME_UI_TAG).GetComponent<Canvas>();
         timeText = gameUI.transform.Find("Timer/Text").GetComponent<Text>();
-        animalControl = GameObject.FindGameObjectWithTag("AnimalControl").GetComponent<AnimalControl>();
+        animalControl = GameObject.FindGameObjectWithTag(GameplayStatics.ANIMAL_CONTROL_TAG).GetComponent<AnimalControl>();
         bearController = GameObject.FindGameObjectWithTag("Player").GetComponent<BearController>();
     }
 
@@ -51,30 +51,30 @@ public class GameManager : MonoBehaviour
 
     bool gameOver = false;
     enum GameOverType { Cursor, Bear }
-    void GameOver(GameOverType type)
+    void GameOver(GameOverType winner)
     {
         gameOver = true;
         bearController.canMove = false;
 
-        switch (type)
+        switch (winner)
         {
             case GameOverType.Bear:
-                StartCoroutine(MoveCameraForEnd());
-                animalControl.Animate();
-                StartCoroutine(DoAfter(() => { GameOverScreen(GameOverType.Cursor); }, 5f));
+                StartCoroutine(DoAfter(() => { GameOverScreen(GameOverType.Cursor); }, 2f));
                 break;
             case GameOverType.Cursor:
-                StartCoroutine(DoAfter(() => { GameOverScreen(type); }, 2f));
+                StartCoroutine(MoveCameraForEnd());
+                animalControl.Animate();
+                StartCoroutine(DoAfter(() => { GameOverScreen(winner); }, 7f));
                 break;
         }
     }
 
-    void GameOverScreen(GameOverType type)
+    void GameOverScreen(GameOverType winner)
     {
         timeText.transform.parent.gameObject.SetActive(false);
         gameUI.transform.Find("GameOver").gameObject.SetActive(true);
         Image gameOverBackground = gameUI.transform.Find("GameOver/Background").GetComponent<Image>();
-        gameUI.transform.Find("GameOver/Game Over/Winner").GetComponent<Text>().text = type == GameOverType.Bear ? "Bear Wins" : "Bear Loses";
+        gameUI.transform.Find("GameOver/Game Over/Winner").GetComponent<Text>().text = winner == GameOverType.Bear ? "Bear Wins" : "Bear Loses";
         //gameOverBackground.sprite = Resources.Load<Sprite>(string.Format("GameOver_{0}", type.ToString()));
     }
 
