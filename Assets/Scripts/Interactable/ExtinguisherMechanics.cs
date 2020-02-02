@@ -20,6 +20,7 @@ public class ExtinguisherMechanics : DragableObject
     [SerializeField] private float RechargeRate = 5.0f;
 
     private Collider ExtinguisherCollider;
+    ParticleSystem effect;
 
     void Awake()
     {
@@ -43,7 +44,15 @@ public class ExtinguisherMechanics : DragableObject
         }
 
         ExtinguisherCollider.enabled = false;
+
+        effect = this.GetComponentInChildren<ParticleSystem>();
     }
+    private void Start()
+    {
+        effect.Play();
+        effect.enableEmission = false;
+    }
+
     // Start is called before the first frame update
     protected override void UseItem()
     {
@@ -57,6 +66,7 @@ public class ExtinguisherMechanics : DragableObject
     IEnumerator UseExtinguisher()
     {
         bIsUsingExtinguisher = true;
+        effect.enableEmission = true;
 
         while (Input.GetButton(GameplayStatics.RepairerInputLookup[RepairerInput.Repairer_UseItem]) && Charge > 0)
         {
@@ -67,6 +77,7 @@ public class ExtinguisherMechanics : DragableObject
         ExtinguisherCollider.enabled = false;
 
         bIsUsingExtinguisher = false;
+        effect.enableEmission = false;
         StartCoroutine("RechargeExtinguisher");
         yield return null;
     }
