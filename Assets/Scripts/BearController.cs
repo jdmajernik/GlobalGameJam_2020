@@ -38,7 +38,7 @@ public class BearController : MonoBehaviour
     [Header("Bear Attack - Selection")]
     private float maxDistToObject = 2.0f;
 
-    private float asyncLookupThreadSleep = 0.5f;
+    private float asyncLookupThreadSleep = 0.15f;
 
 
     private void Awake()
@@ -219,6 +219,7 @@ public class BearController : MonoBehaviour
     {
         if (AttackObject != null)
         {
+            //make sure the object isn't destroyed before trying to attack
             if (AttackObject.bIsDestroyed)
             {
                 AttackObject.ClearHighlight();
@@ -226,6 +227,13 @@ public class BearController : MonoBehaviour
                 return;
             }
             AttackObject.OnBearInteract();
+
+            //update the object's status if it got destroyed during the attack
+            if (AttackObject.bIsDestroyed)
+            {
+                AttackObject.ClearHighlight();
+                AttackObject = null;
+            }
         }
     }
 
@@ -239,6 +247,8 @@ public class BearController : MonoBehaviour
     {
         while (true)
         {
+            var CurrentBearFloor = GetCurrentFloorOfObject(this.gameObject);
+
             if (AttackObject != null)
             {
                 //clears out the attack object if it's too far away
@@ -250,10 +260,15 @@ public class BearController : MonoBehaviour
             }
 
             var destructableEnumerator = GameObject.FindObjectsOfType<InteractableObject>()
-                .Where(obj => !obj.GetComponent<DragableObject>() && !obj.bIsDestroyed);
+                .Where(obj => !obj.bIsDestroyed);
 
             foreach (var item in destructableEnumerator)
             {
+                if (CurrentBearFloor != GetCurrentFloorOfObject(item.gameObject))
+                {
+                    continue;
+                }
+
                 var newObjPos = Vector3.Distance(transform.position, item.gameObject.transform.position);
                 if (newObjPos < maxDistToObject)
                 {
@@ -261,7 +276,11 @@ public class BearController : MonoBehaviour
                     {
                         var attackObjPos = Vector3.Distance(transform.position, AttackObject.gameObject.transform.position);
 
-                        AttackObject = newObjPos > attackObjPos ? item : AttackObject;
+                        if (newObjPos > attackObjPos)
+                        {
+                            AttackObject.ClearHighlight();
+                            AttackObject = item;
+                        }
                     }
                     else
                     {
@@ -280,5 +299,12 @@ public class BearController : MonoBehaviour
         }
 
         yield return null;
+    }
+
+    private HouseFloors GetCurrentFloorOfObject(GameObject obj)
+    {
+        return GameplayStatics.FloorYPositionLookup
+            .Where(pos => pos.Value < obj.transform.position.y).OrderByDescending(x => x.Value).FirstOrDefault()
+            .Key;
     }
 }
