@@ -73,6 +73,8 @@ public class InteractableObject : MonoBehaviour
                 this.bIsDestroyed = true;
                 //Object Change Here
                 //this.gameObject.GetComponent<Renderer>().material = OnDestroyedMaterial;
+                GameObject Effect = Instantiate(Resources.Load<GameObject>("DestroyEffect"));
+                Effect.transform.position = this.transform.position;
                 this.transform.Find("Normal").gameObject.SetActive(false);
                 this.transform.Find("Broken").gameObject.SetActive(true);
             }
