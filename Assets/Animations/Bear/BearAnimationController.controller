@@ -105,7 +105,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Running
-  m_Speed: 1
+  m_Speed: 3
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 5414371245182898803}
@@ -119,7 +119,8 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 0}
+  m_Motion: {fileID: 4781951162920444690, guid: cdc1c2fac7681a7429d409aae577f1f5,
+    type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -289,7 +290,7 @@ AnimatorController:
   - serializedVersion: 5
     m_Name: Bottom
     m_StateMachine: {fileID: -2080939135710747100}
-    m_Mask: {fileID: 31900000, guid: 81a43d32a2ec0314aa922e258e336484, type: 2}
+    m_Mask: {fileID: 0}
     m_Motions: []
     m_Behaviours: []
     m_BlendingMode: 0
@@ -301,7 +302,7 @@ AnimatorController:
   - serializedVersion: 5
     m_Name: Top
     m_StateMachine: {fileID: -796687179944428493}
-    m_Mask: {fileID: 31900000, guid: 0648f793655c3f54a9c5dd63ffa1c91d, type: 2}
+    m_Mask: {fileID: 0}
     m_Motions: []
     m_Behaviours: []
     m_BlendingMode: 0

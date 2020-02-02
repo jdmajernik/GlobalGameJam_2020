@@ -260,7 +260,7 @@ PrefabInstance:
     - target: {fileID: 9164835024765971019, guid: 9421d5ab424525c45998d80779165e85,
         type: 3}
       propertyPath: roundTimer
-      value: 30
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9421d5ab424525c45998d80779165e85, type: 3}
