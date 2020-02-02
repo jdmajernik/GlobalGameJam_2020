@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6861309859766998063}
   - component: {fileID: 2189917426236182350}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: FireExtinguish_Collider
   m_TagString: ExtinguishesFires
   m_Icon: {fileID: 0}
@@ -55,7 +55,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2651524473765404096}
   - component: {fileID: 5938673147179890492}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: ParticleSystemForceField
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -582,7 +582,7 @@ GameObject:
   - component: {fileID: 2477431668428658223}
   - component: {fileID: 5373545923703838172}
   - component: {fileID: 3496326737473504693}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Fill_BACKGROUND
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -657,7 +657,7 @@ GameObject:
   - component: {fileID: 8556077220035983706}
   - component: {fileID: 6196878784899649766}
   - component: {fileID: 6232083307991031397}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Extinguisher
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -741,7 +741,7 @@ GameObject:
   - component: {fileID: 8365783215449964723}
   - component: {fileID: 3965778468978428701}
   - component: {fileID: 4045064929107885360}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Fill_BAR
   m_TagString: Extinguisher_LoadingBar
   m_Icon: {fileID: 0}
@@ -815,7 +815,7 @@ GameObject:
   - component: {fileID: 3162126499227134603}
   - component: {fileID: 2214177207621918973}
   - component: {fileID: 5782767824573214723}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -913,7 +913,7 @@ GameObject:
   - component: {fileID: 6786806549715912663}
   - component: {fileID: 4262001840325217772}
   - component: {fileID: 5944600356029468502}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: ParticleEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5665,7 +5665,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 955061247163242174}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: ParticleSpawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5697,7 +5697,7 @@ GameObject:
   - component: {fileID: 870999920791770780}
   - component: {fileID: 1499316654262608987}
   - component: {fileID: 1783919709893848884}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
