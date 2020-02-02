@@ -27,7 +27,9 @@ public class InteractableObject : MonoBehaviour
 
     private int CombustionCounter = 0;
 
-    private int CombustionThreshold = 20;
+    private int MinimumCombustionThreshold = 100;
+
+    private int CombustionThreshold = 0;
 
     private float RepairIncrement = 10;
 
@@ -41,6 +43,7 @@ public class InteractableObject : MonoBehaviour
 
     void Awake()
     {
+        CombustionThreshold = MinimumCombustionThreshold + UnityEngine.Random.Range(0, 50);
         ObjCanvas.GetComponent<CanvasGroup>().alpha = 0;
         foreach (var image in GetComponentInChildren<Canvas>().gameObject.GetComponentsInChildren<Image>())
         {
