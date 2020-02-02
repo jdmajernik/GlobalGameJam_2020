@@ -13,6 +13,10 @@ public class BearController : MonoBehaviour
     ParticleSystem runningEffect;
     ParticleSystem jumpEffect;
 
+    private float FireCoolOffTime = 3.0f;
+    private bool bIsOnFire = false;
+    private float EndOnFireTime;
+
     [Header("Character Movement")]
     [SerializeField] float maxHorizontalSpeed;
     [SerializeField] float jumpPower;
@@ -62,15 +66,44 @@ public class BearController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.GetComponent<FireMechanics>())
-        {
-            var particleChildren = GetComponentsInChildren<ParticleSystem>();
 
-            foreach (var particleObject in particleChildren)
+        //Update fire timer if the bear is still in fire
+        EndOnFireTime = Time.time + FireCoolOffTime;
+
+        if (!bIsOnFire)
+        {
+            if (other.gameObject.GetComponent<FireMechanics>())
             {
-                particleObject.Play();
+                var particleChildren = GetComponentsInChildren<ParticleSystem>();
+
+                foreach (var particleObject in particleChildren)
+                {
+                    particleObject.Play();
+                }
             }
+
+            StartCoroutine(StopFire());
         }
+    }
+
+    private IEnumerator StopFire()
+    {
+        bIsOnFire = true;
+
+        //Wait on updating timer
+        while (Time.time < EndOnFireTime)
+        {
+            yield return new WaitForSeconds(0.25f);
+        }
+
+        var particleChildren = GetComponentsInChildren<ParticleSystem>();
+
+        foreach (var particleObject in particleChildren)
+        {
+            particleObject.Stop();
+        }
+
+        bIsOnFire = false;
     }
 
     void Update()

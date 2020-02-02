@@ -170,7 +170,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 120
   m_CollisionDetection: 0
 --- !u!114 &9045637230833630806
 MonoBehaviour:
@@ -184,8 +184,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cb987afc5237e841b89fc1040190fd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnDestroyedMaterial: {fileID: 0}
-  DefaultMaterial: {fileID: 0}
   onUseParticleSystem: {fileID: 0}
   highlightMaterial: {fileID: 2100000, guid: 6d01f64f41d73e14fafeb4196b965b4f, type: 2}
   bShowDebug: 0
