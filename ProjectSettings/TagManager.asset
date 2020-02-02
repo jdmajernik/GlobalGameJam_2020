@@ -6,6 +6,8 @@ TagManager:
   tags:
   - GameUI
   - AnimalControl
+  - Extinguisher_LoadingBar
+  - ExtinguishesFires
   layers:
   - Default
   - TransparentFX
@@ -16,8 +18,8 @@ TagManager:
   - 
   - 
   - Animal Control
-  - 
-  - 
+  - Interactable Objects
+  - Bear
   - 
   - 
   - 

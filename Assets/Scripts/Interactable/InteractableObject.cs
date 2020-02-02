@@ -121,11 +121,11 @@ public class InteractableObject : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.GetComponent<FireMechanics>() != null && BurnLatch == false)
         {
-            BurnTimer();
+            StartCoroutine("BurnTimer");
         }
     }
 
