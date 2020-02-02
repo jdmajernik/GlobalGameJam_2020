@@ -63,6 +63,7 @@ public class BearController : MonoBehaviour
         {
             runningEffect.Play();
         }
+        StartCoroutine(LoopRandomBearSounds());
     }
 
     void OnTriggerEnter(Collider other)
@@ -84,6 +85,15 @@ public class BearController : MonoBehaviour
             }
 
             StartCoroutine(StopFire());
+        }
+    }
+
+    IEnumerator LoopRandomBearSounds()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(UnityEngine.Random.Range(3f, 15f));
+            Instantiate(Resources.Load<GameObject>(string.Format("snd_bear_{0}", UnityEngine.Random.Range(1, 2))));
         }
     }
 

@@ -49,7 +49,13 @@ public class AnimalControl : MonoBehaviour
     public void BreakWall()
     {
         this.GetComponentInChildren<ParticleSystem>().Play();
-        StartCoroutine(DoAfter(() => { TurnLights(true); sirensOn = true; }, 2.5f));
+        StartCoroutine(DoAfter(() =>
+        {
+            this.GetComponentInChildren<AudioSource>().Play();
+            TurnLights(true);
+            sirensOn = true;
+        }, 
+        2.5f));
     }
 
     IEnumerator DoAfter(Action action, float delay)
