@@ -33,6 +33,7 @@ public class BearController : MonoBehaviour
     public InteractableObject AttackObject { get; private set; }
     float lastAttack = 0f;
 
+    [SerializeField] LayerMask jumpLayerMask;
 
     [Header("Bear Attack - Selection")]
     private float maxDistToObject = 2.0f;
@@ -46,7 +47,7 @@ public class BearController : MonoBehaviour
         a = this.GetComponentInChildren<Animator>();
         runningEffect = this.transform.Find("RunningEffect").GetComponent<ParticleSystem>();
         jumpEffect = this.transform.Find("JumpEffect").GetComponent<ParticleSystem>();
-
+        
         var particleChildren = GetComponentsInChildren<ParticleSystem>();
 
         foreach (var particleObject in particleChildren)
@@ -114,7 +115,7 @@ public class BearController : MonoBehaviour
 
         // Grounded
         bool grounded = false;
-        if (Physics.Raycast(new Ray(this.transform.position, Vector3.down), (cc.height / 2f) + cc.skinWidth))
+        if (Physics.Raycast(new Ray(this.transform.position, Vector3.down), (cc.height / 2f) + cc.skinWidth, jumpLayerMask))
         {
             verticalSpeed = 0f;
 
