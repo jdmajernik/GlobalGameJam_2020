@@ -19,6 +19,8 @@ public class InteractableObject : MonoBehaviour
 
     private bool CombustionLatch = false;
 
+    private bool BurnLatch = false;
+
     private bool MouseOverObject = false;
 
     private float TimerIncrement = 0.1f;
@@ -27,9 +29,13 @@ public class InteractableObject : MonoBehaviour
 
     private int CombustionCounter = 0;
 
-    private int MinimumCombustionThreshold = 100;
+    private int MinimumCombustionThreshold = 50;
 
     private int CombustionThreshold = 0;
+
+    private float BurnTimeout = 0.1f;
+
+    private float BurnDamage = 10;
 
     private float RepairIncrement = 10;
 
@@ -74,7 +80,6 @@ public class InteractableObject : MonoBehaviour
     {
         if (bIsDestroyed)
         {
-            
             this.Damage = this.Damage - this.RepairIncrement;
             RepairBar.fillAmount = Damage / Durability;
 
@@ -114,7 +119,14 @@ public class InteractableObject : MonoBehaviour
         {
             StartCoroutine("CombustionTimer");
         }
+    }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.GetComponent<FireMechanics>() != null && BurnLatch == false)
+        {
+            BurnTimer();
+        }
     }
 
     protected IEnumerator RepairTimer()
@@ -151,6 +163,24 @@ public class InteractableObject : MonoBehaviour
             this.CombustionCounter = 0;
             Instantiate(Resources.Load<GameObject>("FireObject"),new Vector3(transform.position.x, transform.position.y, transform.position.z-5),Quaternion.identity);
         }
+    }
+
+    protected IEnumerator BurnTimer()
+    {
+        this.BurnLatch = true;
+        yield return new WaitForSeconds(BurnTimeout);
+        Damage = Damage + BurnDamage;
+        if (!bIsDestroyed)
+        {
+            if (Damage >= Durability)
+            {
+                Damage = 0;
+                bIsDestroyed = true;
+                this.gameObject.GetComponent<Renderer>().material = OnDestroyedMaterial;
+                //Instantiate(Resources.Load<GameObject>("FireObject"), new Vector3(transform.position.x, transform.position.y, transform.position.z - 5), Quaternion.identity);
+            }
+        }
+        this.BurnLatch = false;
     }
 
 }   

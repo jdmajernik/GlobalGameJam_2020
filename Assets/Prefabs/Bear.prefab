@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5519660108833890513}
   - component: {fileID: 700110248270078200}
   - component: {fileID: 6869438871956958086}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112,7 +112,7 @@ GameObject:
   - component: {fileID: 3637787526470468408}
   - component: {fileID: 1981013187363825250}
   - component: {fileID: 178991702815487555}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Bear
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -213,6 +213,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: FireEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 6663702247405572256, guid: 3da18b9350394ce48abe6cf1f86fd234,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6723280838452998020, guid: 3da18b9350394ce48abe6cf1f86fd234,
         type: 3}

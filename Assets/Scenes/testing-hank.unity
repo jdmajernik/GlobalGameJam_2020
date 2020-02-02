@@ -548,6 +548,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PrototypeInteractableObject
       objectReference: {fileID: 0}
+    - target: {fileID: 5064725875320704418, guid: 8c00a86720c20e94f953d94d900834db,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8792524080830931746, guid: 8c00a86720c20e94f953d94d900834db,
         type: 3}
       propertyPath: m_LocalPosition.x
