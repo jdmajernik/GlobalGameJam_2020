@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94166d566110ec048b41397e89fd7891, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roundTimer: 5
+  roundTimer: 60
   percentageToWin: 0
 --- !u!114 &9164835024765971018
 MonoBehaviour:
