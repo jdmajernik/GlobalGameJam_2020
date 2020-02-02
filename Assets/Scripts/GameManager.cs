@@ -31,7 +31,6 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         StartCoroutine(Timer());
-
     }
 
 
@@ -74,7 +73,8 @@ public class GameManager : MonoBehaviour
     {
         gameUI.transform.Find("GameOver").gameObject.SetActive(true);
         Image gameOverBackground = gameUI.transform.Find("GameOver/Background").GetComponent<Image>();
-        gameOverBackground.sprite = Resources.Load<Sprite>(string.Format("GameOver_{0}", type.ToString()));
+        gameUI.transform.Find("GameOver/Game Over/Winner").GetComponent<Text>().text = type == GameOverType.Bear ? "Bear Wins" : "Bear Loses";
+        //gameOverBackground.sprite = Resources.Load<Sprite>(string.Format("GameOver_{0}", type.ToString()));
     }
 
     IEnumerator Timer()

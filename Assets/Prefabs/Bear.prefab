@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8841133395660689680}
   - component: {fileID: 5519660108833890513}
   - component: {fileID: 700110248270078200}
+  - component: {fileID: 6869438871956958086}
   m_Layer: 0
   m_Name: Mesh
   m_TagString: Untagged
@@ -79,6 +80,25 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!95 &6869438871956958086
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2619269083066368615}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8c4823fa60960054f92a549adcba9fc6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &8684492417749213726
 GameObject:
   m_ObjectHideFlags: 0
@@ -94,7 +114,7 @@ GameObject:
   - component: {fileID: 178991702815487555}
   m_Layer: 0
   m_Name: Bear
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -131,7 +151,9 @@ MonoBehaviour:
   jumpPower: 4
   slowdown: 15
   speedup: 5
+  canMove: 1
   AttackDist: 3
+  AttackCooldown: 0.5
 --- !u!143 &3637787526470468408
 CharacterController:
   m_ObjectHideFlags: 0
