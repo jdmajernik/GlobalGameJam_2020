@@ -9674,6 +9674,9 @@ MonoBehaviour:
   canMove: 1
   AttackDist: 3
   AttackCooldown: 0.5
+  jumpLayerMask:
+    serializedVersion: 2
+    m_Bits: 51
 --- !u!143 &3637787526470468408
 CharacterController:
   m_ObjectHideFlags: 0
