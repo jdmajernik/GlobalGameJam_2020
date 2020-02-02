@@ -30,7 +30,7 @@ public class InteractableObject : MonoBehaviour
 
     private int CombustionCounter = 0;
 
-    private int MinimumCombustionThreshold = 50;
+    private int MinimumCombustionThreshold = 100;
 
     private int CombustionThreshold = 0;
 
@@ -55,7 +55,7 @@ public class InteractableObject : MonoBehaviour
 
         bear = GameObject.FindObjectOfType<BearController>();
 
-        CombustionThreshold = MinimumCombustionThreshold + UnityEngine.Random.Range(0, 50);
+        CombustionThreshold = MinimumCombustionThreshold + UnityEngine.Random.Range(0, 100);
         ObjCanvas.GetComponent<CanvasGroup>().alpha = 0;
         bIsDestroyed = false;
         foreach (var image in GetComponentInChildren<Canvas>().gameObject.GetComponentsInChildren<Image>())

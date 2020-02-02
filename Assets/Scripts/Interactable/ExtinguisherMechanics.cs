@@ -16,8 +16,8 @@ public class ExtinguisherMechanics : DragableObject
 
     private Image DepletionBar;
 
-    [SerializeField] private float depletionRate = -5.0f;
-    [SerializeField] private float RechargeRate = 5.0f;
+    [SerializeField] private float depletionRate = -1.0f;
+    [SerializeField] private float RechargeRate = 1f;
 
     private Collider ExtinguisherCollider;
     ParticleSystem effect;
