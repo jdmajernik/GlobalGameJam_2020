@@ -257,7 +257,7 @@ public class BearController : MonoBehaviour
     {
         while (true)
         {
-            var CurrentBearFloor = GetCurrentFloorOfObject(this.gameObject);
+            var CurrentBearFloor = GameplayStatics.GetCurrentFloorOfObject(this.gameObject);
 
             if (AttackObject != null)
             {
@@ -274,7 +274,7 @@ public class BearController : MonoBehaviour
 
             foreach (var item in destructableEnumerator)
             {
-                if (CurrentBearFloor != GetCurrentFloorOfObject(item.gameObject))
+                if (CurrentBearFloor != GameplayStatics.GetCurrentFloorOfObject(item.gameObject))
                 {
                     continue;
                 }
@@ -311,10 +311,5 @@ public class BearController : MonoBehaviour
         yield return null;
     }
 
-    private HouseFloors GetCurrentFloorOfObject(GameObject obj)
-    {
-        return GameplayStatics.FloorYPositionLookup
-            .Where(pos => pos.Value < obj.transform.position.y).OrderByDescending(x => x.Value).FirstOrDefault()
-            .Key;
-    }
+    
 }

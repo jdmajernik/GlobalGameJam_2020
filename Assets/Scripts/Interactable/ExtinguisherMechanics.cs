@@ -24,6 +24,7 @@ public class ExtinguisherMechanics : DragableObject
 
     void Awake()
     {
+        base.Init();
         Charge = MAX_CHARGE;
         foreach (var image in GetComponentInChildren<Canvas>().gameObject.GetComponentsInChildren<Image>())
         {
@@ -46,9 +47,6 @@ public class ExtinguisherMechanics : DragableObject
         ExtinguisherCollider.enabled = false;
 
         effect = this.GetComponentInChildren<ParticleSystem>();
-    }
-    private void Start()
-    {
         effect.Play();
         effect.enableEmission = false;
     }

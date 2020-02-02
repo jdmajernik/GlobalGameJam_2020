@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -57,4 +58,10 @@ public class GameplayStatics
         {HouseFloors.House_Middle, 3.3f },
         {HouseFloors.House_Top, 6.2f },
     };
+    public static HouseFloors GetCurrentFloorOfObject(GameObject obj)
+    {
+        return GameplayStatics.FloorYPositionLookup
+            .Where(pos => pos.Value < obj.transform.position.y).OrderByDescending(x => x.Value).FirstOrDefault()
+            .Key;
+    }
 }

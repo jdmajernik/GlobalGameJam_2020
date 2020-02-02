@@ -26,6 +26,7 @@ public class BucketMechanics : DragableObject
 
     void Awake()
     {
+        base.Init();
         SplashEffect = Resources.Load<GameObject>("WaterSplash");
         foreach (var image in GetComponentInChildren<Canvas>().gameObject.GetComponentsInChildren<Image>())
         {
