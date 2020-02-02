@@ -92,6 +92,7 @@ public class BearController : MonoBehaviour
             if (Input.GetAxisRaw("Vertical") > 0 && canMove)
             {
                 a.SetTrigger("Jump");
+                Jump();
             }
         }
 
