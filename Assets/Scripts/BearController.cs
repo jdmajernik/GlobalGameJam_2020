@@ -162,26 +162,30 @@ public class BearController : MonoBehaviour
     /// </summary>
     private void CheckInput()
     {
-        if (Input.GetButtonDown(GameplayStatics.BearInputLookup[BearInput.Bear_Attack]) && Time.time - lastAttack > AttackCooldown)
+        if (Input.GetButtonDown(GameplayStatics.BearInputLookup[BearInput.Bear_Attack]) && Time.time - lastAttack > AttackCooldown && canMove)
         {
             if (Time.time - lastAttack > AttackCooldown)
             {
-                BearAttack();
+                lastAttack = Time.time;
                 a.SetTrigger("Attack");
-                BearAttack();
+                StartCoroutine(DoAfter(BearAttack, 0.25f));
             }
         }
     }
 
     public void BearAttack()
     {
-        lastAttack = Time.time;
-
         Vector3 playerPos = this.gameObject.transform.position;
         Vector3 AttackEndPos = playerPos + (this.gameObject.transform.forward * AttackDist);
         Ray attackRay = new Ray(playerPos, AttackEndPos);
         Physics.Raycast(attackRay, out RaycastHit hit, AttackDist);
 
         hit.transform?.gameObject?.GetComponent<InteractableObject>()?.OnBearInteract();
+    }
+
+    IEnumerator DoAfter(Action action, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        action();
     }
 }
