@@ -153,6 +153,7 @@ public class BearController : MonoBehaviour
             if (Time.time - lastAttack > AttackCooldown)
             {
                 a.SetTrigger("Attack");
+                BearAttack();
             }
         }
     }
