@@ -12,6 +12,7 @@ TagManager:
   - FireParticleChild
   - FireParticleParent
   - WaterColider
+  - DestructableItem
   layers:
   - Default
   - TransparentFX
@@ -24,7 +25,7 @@ TagManager:
   - Animal Control
   - RepairerInteractableObjects
   - Bear
-  - 
+  - Fire!Help!
   - 
   - 
   - 

@@ -1534,7 +1534,7 @@ GameObject:
   - component: {fileID: 8497163811466498659}
   - component: {fileID: 8497163811466498658}
   - component: {fileID: 8497163811466498717}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Right Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3352,6 +3352,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6737999856304790573, guid: 69bcc57ad9d5f844eaf336a2d3482844,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.07
       objectReference: {fileID: 0}
     - target: {fileID: 9001694090320760748, guid: 69bcc57ad9d5f844eaf336a2d3482844,
         type: 3}

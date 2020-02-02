@@ -55,6 +55,8 @@ public class GameManager : MonoBehaviour
     enum GameOverType { Cursor, Bear }
     void GameOver(GameOverType winner)
     {
+        StopCoroutine(Timer());
+
         gameOver = true;
         bearController.canMove = false;
 

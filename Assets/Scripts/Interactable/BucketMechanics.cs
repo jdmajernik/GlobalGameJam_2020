@@ -22,8 +22,12 @@ public class BucketMechanics : DragableObject
     private float FillPercentage = 0;
     private Image FillBar;
 
+    private GameObject SplashEffect;
+
     void Awake()
     {
+        base.Init();
+        SplashEffect = Resources.Load<GameObject>("WaterSplash");
         foreach (var image in GetComponentInChildren<Canvas>().gameObject.GetComponentsInChildren<Image>())
         {
             if (image.CompareTag(GameplayStatics.LOADING_BAR_TAG))
@@ -52,7 +56,8 @@ public class BucketMechanics : DragableObject
         }
 
         RaycastHit[] outHits;
-        var startPos = new Vector3(transform.position.x - (CurrentWaterSplashRadius / 2), closestFloorPos, transform.position.z);
+        var startPos = new Vector3(transform.position.x - (CurrentWaterSplashRadius / 2), closestFloorPos + 0.5f, transform.position.z);
+        var endPos = new Vector3(startPos.x + CurrentWaterSplashRadius, startPos.y, startPos.z);
         outHits = Physics.SphereCastAll(startPos, RayCastRadius, Vector3.right, CurrentWaterSplashRadius);
         foreach (var hit in outHits)
         {
@@ -71,6 +76,12 @@ public class BucketMechanics : DragableObject
         {
             Debug.DrawLine(startPos, new Vector3(startPos.x + CurrentWaterSplashRadius, startPos.y, startPos.z), Color.blue,
                 ShowDebugTime);
+        }
+
+        for (int i = 0; i < Vector3.Distance(startPos, endPos); i++)
+        {
+            var spawnPos = new Vector3(startPos.x + i, startPos.y, startPos.z); 
+            Instantiate(SplashEffect, spawnPos, Quaternion.identity);
         }
 
         BucketFillLevel = 0;
