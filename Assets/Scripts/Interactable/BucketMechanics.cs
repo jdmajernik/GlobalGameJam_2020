@@ -52,8 +52,8 @@ public class BucketMechanics : DragableObject
         }
 
         RaycastHit[] outHits;
-        var startPos = new Vector3(transform.position.x - (WaterSplashRadius / 2), closestFloorPos, transform.position.z);
-        outHits = Physics.SphereCastAll(startPos, RayCastRadius, Vector3.right, WaterSplashRadius);
+        var startPos = new Vector3(transform.position.x - (CurrentWaterSplashRadius / 2), closestFloorPos, transform.position.z);
+        outHits = Physics.SphereCastAll(startPos, RayCastRadius, Vector3.right, CurrentWaterSplashRadius);
         foreach (var hit in outHits)
         {
             if (hit.collider.gameObject.GetComponent<FireMechanics>())
