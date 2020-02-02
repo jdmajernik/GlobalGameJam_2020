@@ -17,9 +17,25 @@ public class InteractableObject : MonoBehaviour
 
     private bool AsyncLatch = false;
 
+    private bool CombustionLatch = false;
+
+    private bool BurnLatch = false;
+
     private bool MouseOverObject = false;
 
     private float TimerIncrement = 0.1f;
+
+    private float CombustionIncrement = 0.1f;
+
+    private int CombustionCounter = 0;
+
+    private int MinimumCombustionThreshold = 50;
+
+    private int CombustionThreshold = 0;
+
+    private float BurnTimeout = 0.1f;
+
+    private float BurnDamage = 10;
 
     private float RepairIncrement = 10;
 
@@ -33,6 +49,7 @@ public class InteractableObject : MonoBehaviour
 
     void Awake()
     {
+        CombustionThreshold = MinimumCombustionThreshold + UnityEngine.Random.Range(0, 50);
         ObjCanvas.GetComponent<CanvasGroup>().alpha = 0;
         foreach (var image in GetComponentInChildren<Canvas>().gameObject.GetComponentsInChildren<Image>())
         {
@@ -63,7 +80,6 @@ public class InteractableObject : MonoBehaviour
     {
         if (bIsDestroyed)
         {
-            
             this.Damage = this.Damage - this.RepairIncrement;
             RepairBar.fillAmount = Damage / Durability;
 
@@ -86,7 +102,7 @@ public class InteractableObject : MonoBehaviour
             Cursor.SetCursor(Resources.Load<Texture2D>("Hammer"), new Vector2(22, 6), CursorMode.ForceSoftware);
             if (Input.GetMouseButtonDown(0) && !AsyncLatch)
             {
-                StartCoroutine("OnTimerExecute");
+                StartCoroutine("RepairTimer");
             }
         }
     }
@@ -97,7 +113,23 @@ public class InteractableObject : MonoBehaviour
         Cursor.SetCursor(Resources.Load<Texture2D>("pointer"), new Vector2(22, 6), CursorMode.ForceSoftware);
     }
 
-    protected IEnumerator OnTimerExecute()
+    void Update()
+    {
+        if(this.CombustionLatch == false && this.bIsDestroyed && !(this.MouseOverObject == true && Input.GetMouseButtonDown(0)))
+        {
+            StartCoroutine("CombustionTimer");
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.GetComponent<FireMechanics>() != null && BurnLatch == false)
+        {
+            StartCoroutine("BurnTimer");
+        }
+    }
+
+    protected IEnumerator RepairTimer()
     {
         if (this.AsyncLatch)
         {
@@ -110,7 +142,7 @@ public class InteractableObject : MonoBehaviour
             //this.RepairLatch = true;
 
             yield return new WaitForSeconds(TimerIncrement);
-
+            CombustionCounter--;
             if (Input.GetMouseButton(0) && this.MouseOverObject)
             {
                 RepairerInteract();
@@ -119,9 +151,36 @@ public class InteractableObject : MonoBehaviour
         }
     }
 
-    private void UpdateRepairAmount(float _amount)
+    protected IEnumerator CombustionTimer()
     {
-        RepairBar.fillAmount = Damage / Durability;
+        this.CombustionLatch = true;
+
+        yield return new WaitForSeconds(CombustionIncrement);
+        this.CombustionCounter++;
+        this.CombustionLatch = false;
+        if (CombustionCounter >= CombustionThreshold)
+        {
+            this.CombustionCounter = 0;
+            Instantiate(Resources.Load<GameObject>("FireObject"),new Vector3(transform.position.x, transform.position.y, transform.position.z-5),Quaternion.identity);
+        }
+    }
+
+    protected IEnumerator BurnTimer()
+    {
+        this.BurnLatch = true;
+        yield return new WaitForSeconds(BurnTimeout);
+        Damage = Damage + BurnDamage;
+        if (!bIsDestroyed)
+        {
+            if (Damage >= Durability)
+            {
+                Damage = 0;
+                bIsDestroyed = true;
+                this.gameObject.GetComponent<Renderer>().material = OnDestroyedMaterial;
+                //Instantiate(Resources.Load<GameObject>("FireObject"), new Vector3(transform.position.x, transform.position.y, transform.position.z - 5), Quaternion.identity);
+            }
+        }
+        this.BurnLatch = false;
     }
 
 }   
