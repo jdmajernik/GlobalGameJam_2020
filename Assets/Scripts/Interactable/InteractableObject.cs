@@ -38,7 +38,7 @@ public class InteractableObject : MonoBehaviour
 
     private float BurnDamage = 10;
 
-    private float RepairIncrement = 10;
+    private float RepairIncrement = 20;
 
     private float Durability = 100;
 
