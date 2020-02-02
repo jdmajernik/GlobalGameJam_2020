@@ -43,7 +43,7 @@ public class FireMechanics : MonoBehaviour
     private float checkFireUpgradeWait = 0.25f; //The time (in seconds) to wait before checking again if the fire needs to be upgraded
 
 
-    private float LevelDownCooldownTime = 0.5f;
+    private float LevelDownCooldownTime = 0.1f;
 
     void Awake()
     {
@@ -133,6 +133,7 @@ public class FireMechanics : MonoBehaviour
     private void DecreaseLevel()
     {
         FireLevel = (EFireLevels) ((int) FireLevel - 1);
+        //FireLevel = 0;
         bLevelDecreaseCoolDown = true;
 
         UpdateFireParticles();

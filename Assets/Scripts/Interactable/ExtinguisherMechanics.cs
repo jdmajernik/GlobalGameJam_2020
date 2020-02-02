@@ -17,7 +17,7 @@ public class ExtinguisherMechanics : DragableObject
     private Image DepletionBar;
 
     private float depletionRate = -1.5f;
-    private float RechargeRate = 0.25f;
+    private float RechargeRate = 1f;
 
     private Collider ExtinguisherCollider;
     ParticleSystem effect;
