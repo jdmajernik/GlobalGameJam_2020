@@ -11,6 +11,7 @@ TagManager:
   - FireBoundry
   - FireParticleChild
   - FireParticleParent
+  - WaterColider
   layers:
   - Default
   - TransparentFX

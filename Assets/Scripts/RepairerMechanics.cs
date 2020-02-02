@@ -9,7 +9,7 @@ public class RepairerMechanics : MonoBehaviour
 
     void Awake()
     {
-        mainCamera = GameObject.FindObjectOfType<Camera>();
+        mainCamera = Camera.main;
     }
     void Update()
     {
@@ -18,10 +18,9 @@ public class RepairerMechanics : MonoBehaviour
             if (HeldItem == null)
             {
                 Ray mouseToWorldRay = mainCamera.ScreenPointToRay(Input.mousePosition);
-
                 int layerMask = LayerMask.GetMask(GameplayStatics.REPAIRER_INTERACTIBLE_OBJECTS_LAYER_NAME);
 
-                var InteractableItemsUnderMouse = Physics.RaycastAll(mouseToWorldRay, 20f,
+                var InteractableItemsUnderMouse = Physics.RaycastAll(mouseToWorldRay, 200f,
                     layerMask);
                 foreach (var InteractableObject in InteractableItemsUnderMouse)
                 {
@@ -38,7 +37,7 @@ public class RepairerMechanics : MonoBehaviour
         }
         else if (Input.GetButtonDown(GameplayStatics.RepairerInputLookup[RepairerInput.Repairer_DropItem]) && HeldItem != null)
         {
-            HeldItem.DropItem();
+            HeldItem?.DropItem();
             HeldItem = null;
         }
     }

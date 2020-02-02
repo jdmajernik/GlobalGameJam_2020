@@ -33,6 +33,7 @@ public class GameplayStatics
     public const string FIRE_BOUNDARY_TAG = "FireBoundry";
     public const string GAME_UI_TAG = "GameUI";
     public const string ANIMAL_CONTROL_TAG = "AnimalControl";
+    public const string WATER_TAG = "WaterColider";
 
     public const float FIRE_SPAWN_Z = 1.0f;
 
