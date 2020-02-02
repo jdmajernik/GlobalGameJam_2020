@@ -21,11 +21,11 @@ public class InteractableObject : MonoBehaviour
 
     private float TimerIncrement = 0.1f;
 
-    private int RepairIncrement = 10;
+    private float RepairIncrement = 10;
 
-    private int Durability = 100;
+    private float Durability = 100;
 
-    private int Damage = 0;
+    private float Damage = 0;
 
     private bool bIsDestroyed = false;
 
@@ -49,6 +49,7 @@ public class InteractableObject : MonoBehaviour
         if (!bIsDestroyed)
         {
             this.Damage = this.Durability;  //Damage can be changed later
+            RepairBar.fillAmount = Damage / Durability;
             if (this.Damage >= this.Durability)  
             {
                 this.Damage = this.Durability;
@@ -62,6 +63,7 @@ public class InteractableObject : MonoBehaviour
     {
         if (bIsDestroyed)
         {
+            
             this.Damage = this.Damage - this.RepairIncrement;
             RepairBar.fillAmount = Damage / Durability;
 
@@ -81,7 +83,7 @@ public class InteractableObject : MonoBehaviour
         if (bIsDestroyed == true)
         {
             ObjCanvas.GetComponent<CanvasGroup>().alpha = 1;
-        
+            Cursor.SetCursor(Resources.Load<Texture2D>("Hammer"), new Vector2(22, 6), CursorMode.ForceSoftware);
             if (Input.GetMouseButtonDown(0) && !AsyncLatch)
             {
                 StartCoroutine("OnTimerExecute");
@@ -92,6 +94,7 @@ public class InteractableObject : MonoBehaviour
     {
         MouseOverObject = false;
         ObjCanvas.GetComponent<CanvasGroup>().alpha = 0;
+        Cursor.SetCursor(Resources.Load<Texture2D>("pointer"), new Vector2(22, 6), CursorMode.ForceSoftware);
     }
 
     protected IEnumerator OnTimerExecute()
