@@ -4,10 +4,12 @@ using UnityEngine;
 
 using System;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] int roundTimer;
+    [SerializeField] float percentageToWin;
 
     int timeToStartPoppingTimerAt = 10;
 
@@ -34,6 +36,47 @@ public class GameManager : MonoBehaviour
 
 
 
+    /// <summary>
+    /// Sets the house's health, use a value between 0 and 1, representing a percentage
+    /// </summary>
+    /// <param name="value"></param>
+    public void SetHouseHealth(float value)
+    {
+        // other stuff could go here
+
+        if (value >= percentageToWin)
+        {
+            GameOver(GameOverType.Bear);
+        }
+    }
+
+    bool gameOver = false;
+    enum GameOverType { Cursor, Bear }
+    void GameOver(GameOverType type)
+    {
+        gameOver = true;
+        bearController.canMove = false;
+
+        switch (type)
+        {
+            case GameOverType.Bear:
+                StartCoroutine(MoveCameraForEnd());
+                animalControl.Animate();
+                StartCoroutine(DoAfter(() => { GameOverScreen(GameOverType.Cursor); }, 5f));
+                break;
+            case GameOverType.Cursor:
+                StartCoroutine(DoAfter(() => { GameOverScreen(type); }, 2f));
+                break;
+        }
+    }
+
+    void GameOverScreen(GameOverType type)
+    {
+        gameUI.transform.Find("GameOver").gameObject.SetActive(true);
+        Image gameOverBackground = gameUI.transform.Find("GameOver/Background").GetComponent<Image>();
+        gameOverBackground.sprite = Resources.Load<Sprite>(string.Format("GameOver_{0}", type.ToString()));
+    }
+
     IEnumerator Timer()
     {
         float roundStart = Time.time;
@@ -56,7 +99,10 @@ public class GameManager : MonoBehaviour
 
         SecondTick((int)roundTimer);
         UpdateTimerUI(0f);
-        StartCoroutine(EndGame());
+        if (!gameOver)
+        {
+            GameOver(GameOverType.Cursor);
+        }
     }
 
     void UpdateTimerUI(float _time = -1f)
@@ -107,17 +153,6 @@ public class GameManager : MonoBehaviour
         timeText.rectTransform.localScale = Vector3.one;
     }
     
-    IEnumerator EndGame()
-    {
-        bearController.canMove = false;
-
-        StartCoroutine(MoveCameraForEnd());
-
-        animalControl.Animate();
-
-        yield return new WaitForSeconds(2f);
-    }
-
     IEnumerator MoveCameraForEnd()
     {
         float duration = 0.75f;
@@ -134,5 +169,21 @@ public class GameManager : MonoBehaviour
             Vector3 thisTarget = Vector3.Slerp(startPosition, newPosition, t);
             Camera.main.transform.position = thisTarget;
         }
+    }
+
+    IEnumerator DoAfter(Action action, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        action();
+    }
+
+    public void MainMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public void PlayAgain()
+    {
+        SceneManager.LoadScene("Game");
     }
 }
