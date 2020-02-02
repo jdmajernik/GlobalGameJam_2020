@@ -42,11 +42,11 @@ public class GameManager : MonoBehaviour
 
     void TurnFireSound(bool b)
     {
-        if (b)
+        if (b  && !fireAudio.isPlaying)
         {
             fireAudio.Play();
         }
-        else
+        else if(fireAudio.isPlaying)
         {
             fireAudio.Stop();
         }
@@ -155,11 +155,20 @@ public class GameManager : MonoBehaviour
 
         //Count Fires
         var FireCount = GameObject.FindObjectsOfType<FireMechanics>().Length;
-        if (FireCount >= 1 && FirstFire == false)
+        if (FireCount >= 1)
         {
-            FirstFire = true;
-            //Spawn Fire Extinguisher
+            TurnFireSound(true);
+            if (FirstFire == false)
+            {
+                FirstFire = true;
+            }
         }
+        else
+        {
+            TurnFireSound(false);
+        }
+
+        //Spawn Fire Extinguisher
         if (FireCount >= fireWinCount || UnbrokenFurnitureCount == 0)
         {
             //BEAR WINS
