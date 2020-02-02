@@ -26,17 +26,18 @@ public class FireMechanics : MonoBehaviour
     private float EndTime;
 
     private bool bLatch = false;
-    private bool bLevelChangeCoolDown = false;
+    private bool bLevelIncreaseCoolDown = false;
+    private bool bLevelDecreaseCoolDown = false;
 
     private ParticleSystem FirePartSystem;
 
-    [SerializeField] private float MedFireUpgradeWaitTime = 1000.0f;
-    [SerializeField] private float LargeFireUpgradeWaitTime = 1500f;
+    [SerializeField] private float MedFireUpgradeWaitTime = 1.0f;
+    [SerializeField] private float LargeFireUpgradeWaitTime = 1.5f;
 
     private float checkFireUpgradeWait = 0.25f; //The time (in seconds) to wait before checking again if the fire needs to be upgraded
 
 
-    private float LevelDownCooldownTime = 500;
+    private float LevelDownCooldownTime = 0.5f;
 
     void Awake()
     {
@@ -81,7 +82,7 @@ public class FireMechanics : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag(GameplayStatics.EXTINGUISH_COLLIDER_TAG) && !bLevelChangeCoolDown)
+        if (other.CompareTag(GameplayStatics.EXTINGUISH_COLLIDER_TAG) && !bLevelDecreaseCoolDown)
         {
             if ((int) FireLevel > 0)
             {
@@ -105,23 +106,22 @@ public class FireMechanics : MonoBehaviour
     private void DecreaseLevel()
     {
         FireLevel = (EFireLevels) ((int) FireLevel - 1);
-        bLevelChangeCoolDown = true;
+        bLevelDecreaseCoolDown = true;
 
         UpdateFireParticles();
-
-        StartCoroutine(ResetWaitLatch(LevelDownCooldownTime));
+        StartCoroutine(ResetDecreaseWaitLatch(LevelDownCooldownTime));
     }
 
     private void IncreaseLevel()
     {
         FireLevel = (int)FireLevel + 1 <= (int)EFireLevels.Fire_Large ? (EFireLevels)((int)FireLevel + 1) : EFireLevels.Fire_Large;
-        bLevelChangeCoolDown = true;
+        bLevelIncreaseCoolDown = true;
 
         Debug.Log("Setting the fire's new level");
 
         UpdateFireParticles();
 
-        StartCoroutine(ResetWaitLatch(FireLevel == EFireLevels.Fire_Small ? MedFireUpgradeWaitTime : LargeFireUpgradeWaitTime));
+        StartCoroutine(ResetIncreaseWaitLatch(FireLevel == EFireLevels.Fire_Small ? MedFireUpgradeWaitTime : LargeFireUpgradeWaitTime));
     }
 
     private IEnumerator TryUpgradeFire()
@@ -130,7 +130,7 @@ public class FireMechanics : MonoBehaviour
         while (true)
         {
             //I want to try and always upgrade the fire if it's possible, since it might fully upgrade, get extinguished to small and then be allowed to grow again, this is a way to ensure it's always trying to get larger
-            if (!bLevelChangeCoolDown && FireLevel != EFireLevels.Fire_Large)
+            if (!bLevelDecreaseCoolDown && FireLevel != EFireLevels.Fire_Large)
             {
                 Debug.Log("Upgrading the fire");
                 IncreaseLevel();
@@ -139,10 +139,15 @@ public class FireMechanics : MonoBehaviour
         }
     }
 
-    private IEnumerator ResetWaitLatch(float time)
+    private IEnumerator ResetIncreaseWaitLatch(float time)
     {
         yield return new WaitForSeconds(time);
-        bLevelChangeCoolDown = false;
+        bLevelIncreaseCoolDown = false;
+    }
+    private IEnumerator ResetDecreaseWaitLatch(float time)
+    {
+        yield return new WaitForSeconds(time);
+        bLevelDecreaseCoolDown = false;
     }
 
     private void UpdateFireParticles()
