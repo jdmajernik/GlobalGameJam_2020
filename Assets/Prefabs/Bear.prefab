@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 3637787526470468408}
   - component: {fileID: 1981013187363825250}
   - component: {fileID: 178991702815487555}
+  - component: {fileID: 5619725619833066382}
   m_Layer: 0
   m_Name: Bear
   m_TagString: Untagged
@@ -131,7 +132,9 @@ MonoBehaviour:
   jumpPower: 4
   slowdown: 15
   speedup: 5
+  canMove: 1
   AttackDist: 3
+  AttackCooldown: 0.5
 --- !u!143 &3637787526470468408
 CharacterController:
   m_ObjectHideFlags: 0
@@ -180,6 +183,25 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!95 &5619725619833066382
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8684492417749213726}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 749bc2f9296792f4ea0f8b8a8591cd65, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &2984085738689748294
 PrefabInstance:
   m_ObjectHideFlags: 0

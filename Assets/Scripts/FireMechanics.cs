@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
 using UnityEngine;
@@ -31,6 +32,8 @@ public class FireMechanics : MonoBehaviour
 
     private ParticleSystem FirePartSystem;
 
+    private List<Collider> Boundries;
+
     [SerializeField] private float MedFireUpgradeWaitTime = 1.0f;
     [SerializeField] private float LargeFireUpgradeWaitTime = 1.5f;
 
@@ -43,41 +46,54 @@ public class FireMechanics : MonoBehaviour
     {
         FirePrefab = Resources.Load<GameObject>("FireObject");
         FireLevel = EFireLevels.Fire_Small;
-        EndTime = Time.time + TimeToWait;
+
+        Boundries = new List<Collider>();
+        var BoundaryObjects = GameObject.FindGameObjectsWithTag(GameplayStatics.FIRE_BOUNDARY_TAG)
+            .Where(obj => obj.GetComponent<Collider>());
+
+        foreach (var boundary in BoundaryObjects)
+        {
+            Boundries.Add(boundary.GetComponent<Collider>());
+        }
 
         FirePartSystem = GetComponentInChildren<ParticleSystem>();
 
         UpdateFireParticles();
 
+        StartCoroutine(TrySpawnFire());
         StartCoroutine(TryUpgradeFire());
     }
 
-    void Update()
+
+    private IEnumerator TrySpawnFire()
     {
-        if (Time.time > EndTime && !bLatch)
+        while (true)
         {
-            bLatch = true;
+            yield return new WaitForSeconds(TimeToWait);
             SpawnFire();
         }
     }
-
-    private async void SpawnFire()
+    private void SpawnFire()
     {
-        float spawnDir = Mathf.RoundToInt(Random.Range(0f, 100f) / 100) == 0 ? -1 : 1;
-        Debug.Log(spawnDir);
 
-        Vector3 SpawnPoint = new Vector3(spawnDir * spawnDist, 0 , 0) + gameObject.transform.position;
+        Vector3 SpawnPointL = new Vector3(-spawnDist, 0 , 0) + gameObject.transform.position;
+        Vector3 SpawnPointR = new Vector3(spawnDist, 0 , 0) + gameObject.transform.position;
         var FireObjects = GameObject.FindObjectsOfType<FireMechanics>();
 
         foreach (var fire in FireObjects)
         {
-            if(Vector3.Distance(fire.gameObject.transform.position, SpawnPoint) < MinDistToSpawn)
-            {
-                return;
-            }
+            if(Vector3.Distance(fire.gameObject.transform.position, SpawnPointL) < MinDistToSpawn) { SpawnPointL = Vector3.zero;}
+            if(Vector3.Distance(fire.gameObject.transform.position, SpawnPointR) < MinDistToSpawn) { SpawnPointR = Vector3.zero;}
         }
 
-        Instantiate(FirePrefab, SpawnPoint, Quaternion.identity);
+        foreach (var boundary in Boundries)
+        {
+            if(Vector3.Distance( boundary.ClosestPoint(SpawnPointL), SpawnPointL) < boundary.bounds.size.x/2) { SpawnPointL = Vector3.zero; }
+            if(Vector3.Distance(boundary.ClosestPoint(SpawnPointR), SpawnPointR) < boundary.bounds.size.x / 2) { SpawnPointR = Vector3.zero; }
+        }
+        
+        if(!SpawnPointL.Equals(Vector3.zero)){Instantiate(FirePrefab, SpawnPointL, Quaternion.identity);}
+        if(!SpawnPointR.Equals(Vector3.zero)){Instantiate(FirePrefab, SpawnPointR, Quaternion.identity);}
     }
 
     void OnTriggerStay(Collider other)
@@ -168,4 +184,10 @@ public class FireMechanics : MonoBehaviour
 
         
     }
+}
+
+public class FireGroup
+{
+    public List<FireMechanics> FireElements;
+
 }
