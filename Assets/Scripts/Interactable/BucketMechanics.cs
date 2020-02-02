@@ -40,6 +40,9 @@ public class BucketMechanics : DragableObject
         //BUG - Item uses itself when the player immediately picks it up. A cooldown should probably be added
         Vector3 closestFloorPos = Vector3.zero;
 
+        //Addressing BUG
+        
+
         //Finds the closest floor position to the object
         foreach (var floorPosition in GameplayStatics.FloorPositionLookup)
         {
