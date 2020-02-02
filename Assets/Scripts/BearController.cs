@@ -37,7 +37,7 @@ public class BearController : MonoBehaviour
     [Header("Bear Attack - Selection")]
     private float maxDistToObject = 2.0f;
 
-    private float asyncLookupThreadSleep = 0.5f;
+    private float asyncLookupThreadSleep = 0.15f;
 
 
     private void Awake()
@@ -218,6 +218,7 @@ public class BearController : MonoBehaviour
     {
         if (AttackObject != null)
         {
+            //make sure the object isn't destroyed before trying to attack
             if (AttackObject.bIsDestroyed)
             {
                 AttackObject.ClearHighlight();
@@ -225,6 +226,13 @@ public class BearController : MonoBehaviour
                 return;
             }
             AttackObject.OnBearInteract();
+
+            //update the object's status if it got destroyed during the attack
+            if (AttackObject.bIsDestroyed)
+            {
+                AttackObject.ClearHighlight();
+                AttackObject = null;
+            }
         }
     }
 
@@ -260,7 +268,11 @@ public class BearController : MonoBehaviour
                     {
                         var attackObjPos = Vector3.Distance(transform.position, AttackObject.gameObject.transform.position);
 
-                        AttackObject = newObjPos > attackObjPos ? item : AttackObject;
+                        if (newObjPos > attackObjPos)
+                        {
+                            AttackObject.ClearHighlight();
+                            AttackObject = item;
+                        }
                     }
                     else
                     {
