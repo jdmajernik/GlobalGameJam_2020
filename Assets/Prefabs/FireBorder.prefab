@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 533933584495323566}
   - component: {fileID: 1577158357555186264}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: FireBorder
   m_TagString: FireBoundry
   m_Icon: {fileID: 0}

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1486155443}
   - component: {fileID: 1486155442}
   - component: {fileID: 7322699181561946529}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: FireObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,6 +89,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: FireEffect
       objectReference: {fileID: 0}
+    - target: {fileID: 6663702247405572256, guid: 3da18b9350394ce48abe6cf1f86fd234,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 6723280838452998020, guid: 3da18b9350394ce48abe6cf1f86fd234,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -153,6 +158,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 8573124730846619231, guid: 3da18b9350394ce48abe6cf1f86fd234,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 8942709900370422468, guid: 3da18b9350394ce48abe6cf1f86fd234,
         type: 3}

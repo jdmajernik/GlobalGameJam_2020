@@ -27,6 +27,7 @@ public enum HouseFloors
 public class GameplayStatics
 {
     public const string REPAIRER_INTERACTIBLE_OBJECTS_LAYER_NAME = "RepairerInteractableObjects";
+    public const string FIRE_LAYER_NAME = "Fire!Help!";
 
     public const string LOADING_BAR_TAG = "Extinguisher_LoadingBar";
     public const string EXTINGUISH_COLLIDER_TAG = "ExtinguishesFires";
