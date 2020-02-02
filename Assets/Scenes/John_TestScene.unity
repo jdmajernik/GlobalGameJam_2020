@@ -470,6 +470,90 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 262845050}
   m_Mesh: {fileID: -8860120370107312990, guid: 4044f610dddf2884887d5201657b8f41, type: 3}
+--- !u!1001 &274736833
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2726169302661645786, guid: 7c87c76991724dd45846c29b144e669c,
+        type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2726169302661645786, guid: 7c87c76991724dd45846c29b144e669c,
+        type: 3}
+      propertyPath: CollisionModule.minKillSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2726169302661645786, guid: 7c87c76991724dd45846c29b144e669c,
+        type: 3}
+      propertyPath: CollisionModule.collidesWith.m_Bits
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 6451036236729271374, guid: 7c87c76991724dd45846c29b144e669c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6451036236729271374, guid: 7c87c76991724dd45846c29b144e669c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 6451036236729271374, guid: 7c87c76991724dd45846c29b144e669c,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6451036236729271374, guid: 7c87c76991724dd45846c29b144e669c,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6451036236729271374, guid: 7c87c76991724dd45846c29b144e669c,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6451036236729271374, guid: 7c87c76991724dd45846c29b144e669c,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6451036236729271374, guid: 7c87c76991724dd45846c29b144e669c,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6451036236729271374, guid: 7c87c76991724dd45846c29b144e669c,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 6451036236729271374, guid: 7c87c76991724dd45846c29b144e669c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 6451036236729271374, guid: 7c87c76991724dd45846c29b144e669c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6451036236729271374, guid: 7c87c76991724dd45846c29b144e669c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6492087322509858766, guid: 7c87c76991724dd45846c29b144e669c,
+        type: 3}
+      propertyPath: m_Name
+      value: WaterSplash
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7c87c76991724dd45846c29b144e669c, type: 3}
 --- !u!1 &331648840
 GameObject:
   m_ObjectHideFlags: 0
