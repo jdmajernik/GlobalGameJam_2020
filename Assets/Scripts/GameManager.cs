@@ -22,9 +22,9 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        gameUI = GameObject.FindGameObjectWithTag("GameUI").GetComponent<Canvas>();
+        gameUI = GameObject.FindGameObjectWithTag(GameplayStatics.GAME_UI_TAG).GetComponent<Canvas>();
         timeText = gameUI.transform.Find("Timer/Text").GetComponent<Text>();
-        animalControl = GameObject.FindGameObjectWithTag("AnimalControl").GetComponent<AnimalControl>();
+        animalControl = GameObject.FindGameObjectWithTag(GameplayStatics.ANIMAL_CONTROL_TAG).GetComponent<AnimalControl>();
         bearController = GameObject.FindGameObjectWithTag("Player").GetComponent<BearController>();
     }
 

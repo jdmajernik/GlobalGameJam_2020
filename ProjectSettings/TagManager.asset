@@ -6,6 +6,9 @@ TagManager:
   tags:
   - GameUI
   - AnimalControl
+  - ExtinguishesFires
+  - Extinguisher_LoadingBar
+  - FireBoundry
   layers:
   - Default
   - TransparentFX
@@ -16,7 +19,7 @@ TagManager:
   - 
   - 
   - Animal Control
-  - 
+  - RepairerInteractableObjects
   - 
   - 
   - 
