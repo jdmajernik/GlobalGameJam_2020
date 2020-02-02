@@ -63,6 +63,7 @@ public class BearController : MonoBehaviour
         {
             runningEffect.Play();
         }
+        StartCoroutine(LoopRandomBearSounds());
     }
 
     void OnTriggerEnter(Collider other)
@@ -84,6 +85,15 @@ public class BearController : MonoBehaviour
             }
 
             StartCoroutine(StopFire());
+        }
+    }
+
+    IEnumerator LoopRandomBearSounds()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(UnityEngine.Random.Range(3f, 15f));
+            Instantiate(Resources.Load<GameObject>(string.Format("snd_bear_{0}", UnityEngine.Random.Range(1, 2))));
         }
     }
 
@@ -247,7 +257,7 @@ public class BearController : MonoBehaviour
     {
         while (true)
         {
-            var CurrentBearFloor = GetCurrentFloorOfObject(this.gameObject);
+            var CurrentBearFloor = GameplayStatics.GetCurrentFloorOfObject(this.gameObject);
 
             if (AttackObject != null)
             {
@@ -264,7 +274,7 @@ public class BearController : MonoBehaviour
 
             foreach (var item in destructableEnumerator)
             {
-                if (CurrentBearFloor != GetCurrentFloorOfObject(item.gameObject))
+                if (CurrentBearFloor != GameplayStatics.GetCurrentFloorOfObject(item.gameObject))
                 {
                     continue;
                 }
@@ -301,10 +311,5 @@ public class BearController : MonoBehaviour
         yield return null;
     }
 
-    private HouseFloors GetCurrentFloorOfObject(GameObject obj)
-    {
-        return GameplayStatics.FloorYPositionLookup
-            .Where(pos => pos.Value < obj.transform.position.y).OrderByDescending(x => x.Value).FirstOrDefault()
-            .Key;
-    }
+    
 }

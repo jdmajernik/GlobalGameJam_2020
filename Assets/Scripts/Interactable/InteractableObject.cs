@@ -84,6 +84,7 @@ public class InteractableObject : MonoBehaviour
                 Effect.transform.position = this.transform.position;
                 this.transform.Find("Normal").gameObject.SetActive(false);
                 this.transform.Find("Broken").gameObject.SetActive(true);
+                Instantiate(Resources.Load<GameObject>(string.Format("snd_break_{0}", UnityEngine.Random.Range(1, 3))));
             }
         }
     }
@@ -176,7 +177,9 @@ public class InteractableObject : MonoBehaviour
         if (CombustionCounter >= CombustionThreshold)
         {
             this.CombustionCounter = 0;
-            Instantiate(Resources.Load<GameObject>("FireObject"),new Vector3(transform.position.x, transform.position.y, transform.position.z-(GameplayStatics.FIRE_SPAWN_Z)),Quaternion.identity);
+            float fireYSpawnPos =
+                GameplayStatics.FloorYPositionLookup[GameplayStatics.GetCurrentFloorOfObject(this.gameObject)] + 0.25f;
+            Instantiate(Resources.Load<GameObject>("FireObject"),new Vector3(transform.position.x, fireYSpawnPos, transform.position.z-(GameplayStatics.FIRE_SPAWN_Z)),Quaternion.identity);
         }
     }
 
@@ -195,6 +198,7 @@ public class InteractableObject : MonoBehaviour
                 //this.gameObject.GetComponent<Renderer>().material = OnDestroyedMaterial;
                 this.transform.Find("Normal").gameObject.SetActive(false);
                 this.transform.Find("Broken").gameObject.SetActive(true);
+                Instantiate(Resources.Load<GameObject>(string.Format("snd_break_{0}", UnityEngine.Random.Range(1, 3))));
                 //Instantiate(Resources.Load<GameObject>("FireObject"), new Vector3(transform.position.x, transform.position.y, transform.position.z - 5), Quaternion.identity);
             }
         }

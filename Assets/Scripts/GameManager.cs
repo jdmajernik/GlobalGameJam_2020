@@ -20,8 +20,9 @@ public class GameManager : MonoBehaviour
     Text timeText;
     AnimalControl animalControl;
     BearController bearController;
-    
+    AudioSource fireAudio;
 
+    
 
     void Awake()
     {
@@ -29,6 +30,7 @@ public class GameManager : MonoBehaviour
         timeText = gameUI.transform.Find("Timer/Text").GetComponent<Text>();
         animalControl = GameObject.FindGameObjectWithTag(GameplayStatics.ANIMAL_CONTROL_TAG).GetComponent<AnimalControl>();
         bearController = GameObject.FindGameObjectWithTag("Player").GetComponent<BearController>();
+        fireAudio = this.GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -37,6 +39,18 @@ public class GameManager : MonoBehaviour
     }
 
 
+
+    void TurnFireSound(bool b)
+    {
+        if (b)
+        {
+            fireAudio.Play();
+        }
+        else
+        {
+            fireAudio.Stop();
+        }
+    }
 
     /// <summary>
     /// Sets the house's health, use a value between 0 and 1, representing a percentage
