@@ -43,8 +43,10 @@ public class BucketMechanics : DragableObject
     {
         //BUG - Item uses itself when the player immediately picks it up. A cooldown should probably be added
         float closestFloorPos = -1.0f;
-
-        //Addressing BUG
+        if (FillPercentage < 0.01)
+        {
+            return;
+        }
         
 
         //Finds the closest floor position to the object

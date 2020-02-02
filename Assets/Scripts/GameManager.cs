@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using System;
+using System.Linq;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
@@ -10,7 +11,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] int roundTimer;
     [SerializeField] float percentageToWin;
-    [SerializeField] private int fireWinCount = 100;
+    private int fireWinCount = 90;
 
     int timeToStartPoppingTimerAt = 10;
     private bool FirstFire = false;
@@ -134,6 +135,10 @@ public class GameManager : MonoBehaviour
         {
             PopTimer((float)(secondsPassed - roundTimer + timeToStartPoppingTimerAt) / (float)timeToStartPoppingTimerAt);
         }
+
+        var UnbrokenFurnitureCount =
+            GameObject.FindObjectsOfType<InteractableObject>().Where(obj => !obj.bIsDestroyed).Count();
+
         //Count Fires
         var FireCount = GameObject.FindObjectsOfType<FireMechanics>().Length;
         if (FireCount >= 1 && FirstFire == false)
@@ -141,7 +146,7 @@ public class GameManager : MonoBehaviour
             FirstFire = true;
             //Spawn Fire Extinguisher
         }
-        if (FireCount >= fireWinCount)
+        if (FireCount >= fireWinCount || UnbrokenFurnitureCount == 0)
         {
             //BEAR WINS
             GameOver(GameOverType.Bear);
