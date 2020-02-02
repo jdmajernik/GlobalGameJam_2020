@@ -176,7 +176,9 @@ public class InteractableObject : MonoBehaviour
         if (CombustionCounter >= CombustionThreshold)
         {
             this.CombustionCounter = 0;
-            Instantiate(Resources.Load<GameObject>("FireObject"),new Vector3(transform.position.x, transform.position.y, transform.position.z-(GameplayStatics.FIRE_SPAWN_Z)),Quaternion.identity);
+            float fireYSpawnPos =
+                GameplayStatics.FloorYPositionLookup[GameplayStatics.GetCurrentFloorOfObject(this.gameObject)] + 0.25f;
+            Instantiate(Resources.Load<GameObject>("FireObject"),new Vector3(transform.position.x, fireYSpawnPos, transform.position.z-(GameplayStatics.FIRE_SPAWN_Z)),Quaternion.identity);
         }
     }
 
