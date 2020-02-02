@@ -188,10 +188,11 @@ MonoBehaviour:
   highlightMaterial: {fileID: 2100000, guid: 6d01f64f41d73e14fafeb4196b965b4f, type: 2}
   bShowDebug: 0
   ShowDebugTime: 5
-  WaterSplashRadius: 10
+  MaxWaterSplashRadius: 10
   RayCastHeight: 2
   RayCastRadius: 2
   BucketFillLevel: 0
+  MaxFillLevel: 100
 --- !u!136 &3420900516535746554
 CapsuleCollider:
   m_ObjectHideFlags: 0
